@@ -10,6 +10,7 @@ from itemadapter import ItemAdapter
 import requests
 from urllib.parse import urlencode
 from random import randint
+from fake_useragent import UserAgent
 
 class BookscraperSpiderMiddleware:
     # Not all methods need to be defined. If a method is not defined,
@@ -139,3 +140,10 @@ class ScrapeOpsFakeBrowserHeaderAgentMiddleware:
         if random_browser_header and isinstance(random_browser_header, dict):
             request.headers.update(random_browser_header)  # ✅ Safe merge
         return None  # ✅ Always return None or Response/Request
+    
+class FakeUserAgentMiddleware:
+    def __init__(self):
+        self.ua = UserAgent()
+        
+    def process_request(self, request, spider):
+        request.headers.setdefault("User-Agent", self.ua.random)

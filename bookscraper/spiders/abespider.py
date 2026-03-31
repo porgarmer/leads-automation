@@ -1,5 +1,5 @@
 import scrapy
-
+from bookscraper.items import BookItem
 
 class AbeSpider(scrapy.Spider):
     name = "abespider"
@@ -39,11 +39,11 @@ class AbeSpider(scrapy.Spider):
         books = response.css("div.collection-item")
         
         for book in books:
-            yield{
-                "title": book.css("div.title::text").get(),
-                "author": book.css("div.authors::text").get(),
-                "url": "www.abebooks.com" + book.css('div.collection-item  a').attrib['href']
-            }
+            book_item = BookItem()
+            book_item["title"] = book.css("div.title::text").get()
+            book_item["author"] = book.css("div.authors::text").get()
+            book_item["url"] ="www.abebooks.com" + book.css('div.collection-item  a').attrib['href']
+            yield book_item
 
 
 # def parse(self, response):
