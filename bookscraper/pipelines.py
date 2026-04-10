@@ -76,4 +76,6 @@ class AbePipeline:
         lname, fname = [p.strip() for p in author.split(",", 1)]
         return f"{fname} {lname}"
     
+class SaveToPostgresPipeline:
+    pass
     

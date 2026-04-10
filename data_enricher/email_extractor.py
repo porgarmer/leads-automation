@@ -200,5 +200,8 @@ def scrape_author_email(author_name):
             pass
 
 
-# TEST
-scrape_author_email("Jules Howard")
+authors = ["Jules Howard", "Peter Kerr"]
+
+for a in authors:
+    
+    scrape_author_email(a)
