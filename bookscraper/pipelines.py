@@ -8,6 +8,7 @@
 from itemadapter import ItemAdapter
 from scrapy.exceptions import DropItem
 import re
+import psycopg2
 
 class AbePipeline:
     def process_item(self, item, spider):
@@ -21,7 +22,7 @@ class AbePipeline:
         author = self.clean_author(author=author)
         
         if not self.is_single_author(author=author):
-            raise DropItem(f"Multip authors: {author}")
+            raise DropItem(f"Multiple authors: {author}")
         
         if self.is_lname_fname(author=author):
             adapter["author"] = self.format_author_fname_lname(author=author)
@@ -77,5 +78,51 @@ class AbePipeline:
         return f"{fname} {lname}"
     
 class SaveToPostgresPipeline:
-    pass
+    def __init__(self):
+        hostname = "localhost"
+        username = "postgres"
+        password = "12345"
+        database = "book"
+        
+        self.connection = psycopg2.connect(host=hostname, user=username, password=password, dbname=database)
+        
+        ## Create cursor, used to execute commands
+        self.cur = self.connection.cursor()
+        
+        ## Create books table if none exists
+        self.cur.execute("""
+        CREATE TABLE IF NOT EXISTS book(
+            id serial PRIMARY KEY, 
+            url VARCHAR(255),
+            title text,
+            author VARCHAR(255) UNIQUE,
+            author_email VARCHAR(255) default null,
+            author_contact_num varchar(255) default null,
+            author_address text default null
+            information_filled boolean default false
+        )
+        """)
+
+    
+    def process_item(self, item, spider):
+        
+        self.cur.execute(""" 
+            INSERT INTO book (url, title, author) 
+            VALUES (%s,%s,%s)
+            ON CONFLICT (author) DO NOTHING
+        """, (
+            item["url"],
+            item["title"],
+            item["author"],
+        ))
+
+        ## Execute insert of data into database
+        self.connection.commit()
+        return item
+
+    def close_spider(self, spider):
+
+        ## Close cursor & connection to database 
+        self.cur.close()
+        self.connection.close()
     

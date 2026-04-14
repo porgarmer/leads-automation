@@ -11,6 +11,8 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.common.exceptions import TimeoutException
 import logging
+from db.db import Session
+from db.models import Book
 
 def create_driver():
     
@@ -100,29 +102,53 @@ def scrape_author_information(driver, author):
         
         #Get author address, email, and phone number
         address = safe_find_element(driver=driver, by=By.CSS_SELECTOR, element="dt.p-icon_addr + dd")
-        phone = safe_find_element(driver=driver, by=By.CSS_SELECTOR, element="dt.p-icon_phone + dd")
+        contact_num = safe_find_element(driver=driver, by=By.CSS_SELECTOR, element="dt.p-icon_phone + dd")
         email = safe_find_element(driver=driver, by=By.CSS_SELECTOR, element="dt.p-icon_email + dd")
         
-        return {
-            "Address": get_text(element=address),
-            "Phone": get_text(element=phone),
-            "Email": get_text(element=email)
-        }
-        
+        #Check if the information has contact number. Authors with contact numbers are a priority
+        if contact_num:
+            return {
+                "address": get_text(element=address),
+                "contact_num": get_text(element=contact_num),
+                "email": get_text(element=email) 
+            }
+            
+        else:
+            return None
+            
     except:
         print("Something went wrong")
         driver.quit()
+        
+def update_author_db_record(session, author_id, author_info):
+    if not author_info:
+        return
+    
+    book = session.query(Book).filter_by(id=author_id).first()
+    if book:
 
+        book.author_contact_num = author_info["contact_num"]
+        book.author_email = author_info["email"]
+        book.author_address = author_info["address"]
+        book.information_filled = True
+        
+        session.commit()
+        
 def main():
-    authors = ["Peter Kerr", "Jenny Han", "Suzanne Collins"]
+    #Get authors from database
+    session = Session()
+    authors = session.query(Book).filter_by(information_filled=False).limit(10)
     author_information = {}
     driver = create_driver()
-    
+
     for author in authors:
-        info = scrape_author_information(driver=driver, author=author)
-        author_information[author] = info
+        author = author.to_dict()
+        info = scrape_author_information(driver=driver, author=author["author"])
+        author_information[author["author"]] = info
+        update_author_db_record(session=session, author_id=author["id"], author_info=info)
         
     print(author_information)
+  
     
 if __name__ == "__main__":
     main()
