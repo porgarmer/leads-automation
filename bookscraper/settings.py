@@ -25,9 +25,10 @@ ROBOTSTXT_OBEY = False
 #CONCURRENT_REQUESTS = 16
 CONCURRENT_REQUESTS_PER_DOMAIN = 1
 DOWNLOAD_DELAY = 2
+RANDOMIZE_DOWNLOAD_DELAY=True
 
 # Disable cookies (enabled by default)
-#COOKIES_ENABLED = False
+COOKIES_ENABLED = True
 
 # Disable Telnet Console (enabled by default)
 #TELNETCONSOLE_ENABLED = False
@@ -54,8 +55,8 @@ SCRAPEOPS_PROXY_ENABLED = True
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 DOWNLOADER_MIDDLEWARES = {
     "bookscraper.middlewares.BookscraperDownloaderMiddleware": 543,
-    "bookscraper.middlewares.ScrapeOpsFakeBrowserHeaderAgentMiddleware": None,
-    "bookscraper.middlewares.FakeUserAgentMiddleware": 400,
+    "bookscraper.middlewares.ScrapeOpsFakeBrowserHeaderAgentMiddleware": 400,
+    #"bookscraper.middlewares.FakeUserAgentMiddleware": 400,
     # 'scrapeops_scrapy_proxy_sdk.scrapeops_scrapy_proxy_sdk.ScrapeOpsScrapyProxySdk': 725,
     # 'scrapeops_scrapy.middleware.retry.RetryMiddleware': 550, 
     # 'scrapy.downloadermiddlewares.retry.RetryMiddleware': None, 
@@ -76,7 +77,7 @@ ITEM_PIPELINES = {
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html
-#AUTOTHROTTLE_ENABLED = True
+AUTOTHROTTLE_ENABLED = True
 # The initial download delay
 #AUTOTHROTTLE_START_DELAY = 5
 # The maximum download delay to be set in case of high latencies

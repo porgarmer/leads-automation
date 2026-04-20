@@ -77,6 +77,10 @@ class AbePipeline:
         lname, fname = [p.strip() for p in author.split(",", 1)]
         return f"{fname} {lname}"
     
+class GoodreadsPipeline:
+    pass
+
+
 class SaveToPostgresPipeline:
     def __init__(self):
         hostname = "localhost"

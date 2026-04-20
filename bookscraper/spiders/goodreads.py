@@ -7,7 +7,7 @@ class GoodreadsSpider(scrapy.Spider):
     start_urls = ["https://www.goodreads.com/list/popular_lists"]
 
     custom_settings = {
-        "CLOSESPIDER_ITEMCOUNT": 200,
+        "CLOSESPIDER_ITEMCOUNT": 100,
         "ITEM_PIPELINES": {
         }
     }
@@ -60,6 +60,11 @@ class GoodreadsSpider(scrapy.Spider):
         )
         
     def parse_author_page(self, response):
+        if not response.css('span[id^="freeTextContainerauthor"]'):
+            self.logger.warning(f"Incomplete page, retrying: {response.url}")
+            yield response.request.replace(dont_filter=True)
+            return
+        
         book_title = response.meta["book_title"]
         book_rating = response.meta["book_rating"]
         book_url = response.meta["book_url"]
