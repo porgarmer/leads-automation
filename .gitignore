@@ -1,3 +1,4 @@
+test.py
 /.vagrant
 /scrapy.iml
 *.pyc
@@ -29,5 +30,3 @@ Thumbs.db
 
 # OSX miscellaneous
 .DS_Store
-
-test
