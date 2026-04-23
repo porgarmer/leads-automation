@@ -6,7 +6,7 @@
 import scrapy
 
 
-class BookItem(scrapy.Item):
+class ScrapedAuthorItem(scrapy.Item):
     url = scrapy.Field()
     title = scrapy.Field()
     rating = scrapy.Field()

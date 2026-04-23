@@ -12,7 +12,7 @@ from selenium.webdriver.common.action_chains import ActionChains
 from selenium.common.exceptions import TimeoutException
 import logging
 from db.db import Session
-from db.models import Book
+from db.models import ScrapedAuthor
 
 def create_driver():
     
@@ -124,7 +124,7 @@ def update_author_db_record(session, author_id, author_info):
     if not author_info:
         return
     
-    book = session.query(Book).filter_by(id=author_id).first()
+    book = session.query(ScrapedAuthor).filter_by(id=author_id).first()
     if book:
 
         book.author_contact_num = author_info["contact_num"]
@@ -137,7 +137,7 @@ def update_author_db_record(session, author_id, author_info):
 def main():
     #Get authors from database
     session = Session()
-    authors = session.query(Book).filter_by(information_filled=False).limit(10)
+    authors = session.query(ScrapedAuthor).filter_by(information_filled=False).limit(10)
     author_information = {}
     driver = create_driver()
 

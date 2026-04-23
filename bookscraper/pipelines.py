@@ -7,8 +7,12 @@
 # useful for handling different item types with a single interface
 from itemadapter import ItemAdapter
 from scrapy.exceptions import DropItem
+from sqlalchemy.exc import IntegrityError
 import re
 import psycopg2
+from db.db import Session
+from db.models import ScrapedAuthor
+from datetime import datetime
 
 class AbePipeline:
     def process_item(self, item, spider):
@@ -78,55 +82,83 @@ class AbePipeline:
         return f"{fname} {lname}"
     
 class GoodreadsPipeline:
-    pass
-
+    def process_item(self, item, spider):
+        adapter = ItemAdapter(item=item)
+        
+        adapter["about_author"] = self.clean_about_author(about_author=adapter["about_author"]) if adapter["about_author"] else None
+        adapter["rating"] = self.convert_rating_to_int(rating=adapter["rating"]) if adapter["rating"] else None
+        adapter["birthdate"] = self.format_dob(dob=adapter["birthdate"]) if adapter["birthdate"] else None
+        adapter["deathdate"] = self.format_death_date(death_date=adapter["deathdate"]) if adapter["deathdate"] else None
+    
+        return item
+    
+    def clean_about_author(self, about_author):
+        about_author = " ".join(
+            t.strip() for t in about_author
+            if t.strip()
+        )
+        
+        return about_author
+    
+    def convert_rating_to_int(self, rating):
+        return float(rating)
+    
+    def check_date_format(self, date_str, format):
+        try:
+            datetime.strptime(date_str, format)
+            return True
+        except ValueError:
+            return False
+        
+    def format_dob(self, dob):
+        format1 = "%m/%d/%Y"
+        format2 = "%B %d, %Y"
+        
+        if self.check_date_format(date_str=dob, format=format1):
+            return datetime.strptime(dob, format1)
+        elif self.check_date_format(date_str=dob, format=format2):
+            return datetime.strptime(dob, format2)
+        else: 
+            return None
+        
+    def format_death_date(self, death_date):
+        format1 = "%m/%d/%Y"
+        format2 = "%B %d, %Y"
+        
+        if self.check_date_format(date_str=death_date, format=format1):
+            return datetime.strptime(death_date, format1)
+        elif self.check_date_format(date_str=death_date, format=format2):
+            return datetime.strptime(death_date, format2)
+        else:
+            return None
 
 class SaveToPostgresPipeline:
     def __init__(self):
-        hostname = "localhost"
-        username = "postgres"
-        password = "12345"
-        database = "book"
+        self.session = Session()
         
-        self.connection = psycopg2.connect(host=hostname, user=username, password=password, dbname=database)
-        
-        ## Create cursor, used to execute commands
-        self.cur = self.connection.cursor()
-        
-        ## Create books table if none exists
-        self.cur.execute("""
-        CREATE TABLE IF NOT EXISTS book(
-            id serial PRIMARY KEY, 
-            url VARCHAR(255),
-            title text,
-            author VARCHAR(255) UNIQUE,
-            author_email VARCHAR(255) default null,
-            author_contact_num varchar(255) default null,
-            author_address text default null
-            information_filled boolean default false
-        )
-        """)
-
-    
     def process_item(self, item, spider):
+        try:
+            scraped_author = ScrapedAuthor(
+                author=item["author"],
+                about_author=item["about_author"],
+                author_birth_date=item["birthdate"],
+                author_death_date=item["deathdate"],
+                author_website=item["website"],
+                book_url=item["url"],
+                book_title=item["title"],
+                book_rating=item["rating"]
+            )
+            
+            self.session.add(scraped_author)
+            self.session.commit()
+        except IntegrityError as e:
+            self.session.rollback()
+            spider.logger.error(f"DB error: {e}")
         
-        self.cur.execute(""" 
-            INSERT INTO book (url, title, author) 
-            VALUES (%s,%s,%s)
-            ON CONFLICT (author) DO NOTHING
-        """, (
-            item["url"],
-            item["title"],
-            item["author"],
-        ))
-
-        ## Execute insert of data into database
-        self.connection.commit()
         return item
 
     def close_spider(self, spider):
 
         ## Close cursor & connection to database 
-        self.cur.close()
-        self.connection.close()
+        self.session.close()
     

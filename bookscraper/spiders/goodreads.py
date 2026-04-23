@@ -1,5 +1,5 @@
 import scrapy
-from bookscraper.items import BookItem
+from bookscraper.items import ScrapedAuthorItem
 
 class GoodreadsSpider(scrapy.Spider):
     name = "goodreads"
@@ -9,6 +9,8 @@ class GoodreadsSpider(scrapy.Spider):
     custom_settings = {
         "CLOSESPIDER_ITEMCOUNT": 100,
         "ITEM_PIPELINES": {
+            "bookscraper.pipelines.GoodreadsPipeline": 300,
+            "bookscraper.pipelines.SaveToPostgresPipeline": 300
         }
     }
         
@@ -69,7 +71,6 @@ class GoodreadsSpider(scrapy.Spider):
         book_rating = response.meta["book_rating"]
         book_url = response.meta["book_url"]
         
-        #author_name = response.css('h1.authorName span[itemprop="name"]::text').get()
         author_name = response.meta["author_name"]
         
         birth_date = response.css('div[itemprop="birthDate"]::text').get()
@@ -77,21 +78,24 @@ class GoodreadsSpider(scrapy.Spider):
         deathdate = response.css('div[itemprop="deathDate"]::text').get()
         
         #Author has nested tags. *::text will get all text including nested tags
-        #about_author = response.css('span[id^=freeTextContainerauthor] *::text').getall()
-        about_author = " ".join(
-            t.strip() for t in response.css('span[id^=freeTextContainerauthor] *::text').getall()
-            if t.strip()
-        )
+        about_author = (
+            response.css('span[id^="freeTextauthor"] *::text').getall()
+            or response.css('span[id^="freeTextContainerauthor"] *::text').getall()
+        )       
+        # about_author = " ".join(
+        #     t.strip() for t in response.css('span[id^=freeTextContainerauthor] *::text').getall()
+        #     if t.strip()
+        # )
         
-        book_item = BookItem()
-        book_item["title"] = book_title
-        book_item["rating"] = book_rating
-        book_item["url"] = book_url
+        scraped_author = ScrapedAuthorItem()
+        scraped_author["title"] = book_title
+        scraped_author["rating"] = book_rating
+        scraped_author["url"] = book_url
         
-        book_item["author"] = author_name
-        book_item["birthdate"] = birth_date.strip() if birth_date else None
-        book_item["website"] = website
-        book_item["deathdate"] = deathdate.strip() if deathdate else None
-        book_item["about_author"] = about_author
+        scraped_author["author"] = author_name
+        scraped_author["birthdate"] = birth_date.strip() if birth_date else None
+        scraped_author["website"] = website
+        scraped_author["deathdate"] = deathdate.strip() if deathdate else None
+        scraped_author["about_author"] = about_author
         
-        yield book_item
+        yield scraped_author
