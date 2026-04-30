@@ -7,7 +7,8 @@ class GoodreadsSpider(scrapy.Spider):
     start_urls = ["https://www.goodreads.com/list/popular_lists"]
 
     custom_settings = {
-        "CLOSESPIDER_ITEMCOUNT": 100,
+        "JOBDIR": "jobdir/goodreads",
+        "CLOSESPIDER_ITEMCOUNT": 1000,
         "ITEM_PIPELINES": {
             "bookscraper.pipelines.GoodreadsPipeline": 300,
             "bookscraper.pipelines.SaveToPostgresPipeline": 300
@@ -21,9 +22,9 @@ class GoodreadsSpider(scrapy.Spider):
             href = link.attrib["href"]
             yield response.follow(href, callback=self.parse_list)
             
-        # next_page = response.css("a.next_page::attr(href)").get()
-        # if next_page:
-        #     yield response.follow(next_page, callback=self.parse)
+        next_page = response.css("a.next_page::attr(href)").get()
+        if next_page:
+            yield response.follow(next_page, callback=self.parse)
             
     def parse_list(self, response):
         book_links = response.css("a.bookTitle")
@@ -38,9 +39,9 @@ class GoodreadsSpider(scrapy.Spider):
                 }
             )
         
-        # next_page = response.css("a.next_page::attr(href)").get()
-        # if next_page:
-        #     yield response.follow(next_page, callback=self.parse_list)
+        next_page = response.css("a.next_page::attr(href)").get()
+        if next_page:
+            yield response.follow(next_page, callback=self.parse_list)
         
     def parse_book_page(self, response):
         book_title = response.css('h1[data-testid="bookTitle"]::text').get()
@@ -62,10 +63,30 @@ class GoodreadsSpider(scrapy.Spider):
         )
         
     def parse_author_page(self, response):
-        if not response.css('span[id^="freeTextContainerauthor"]'):
-            self.logger.warning(f"Incomplete page, retrying: {response.url}")
-            yield response.request.replace(dont_filter=True)
-            return
+        retry_count = response.meta.get("retry_count", 0)
+
+        author_container_exists = response.css('span[id^="freeTextContainerauthor"]')
+
+        if not author_container_exists:
+
+            if retry_count < 3:
+                self.logger.warning(
+                    f"Incomplete page, retry {retry_count + 1}: {response.url}"
+                )
+
+                yield response.request.replace(
+                    dont_filter=True,
+                    meta={
+                        **response.meta,
+                        "retry_count": retry_count + 1
+                    }
+                )
+                return
+
+            self.logger.warning(
+                f"Max retries reached. Saving partial author info: {response.url}"
+            )
+
         
         book_title = response.meta["book_title"]
         book_rating = response.meta["book_rating"]
@@ -82,10 +103,6 @@ class GoodreadsSpider(scrapy.Spider):
             response.css('span[id^="freeTextauthor"] *::text').getall()
             or response.css('span[id^="freeTextContainerauthor"] *::text').getall()
         )       
-        # about_author = " ".join(
-        #     t.strip() for t in response.css('span[id^=freeTextContainerauthor] *::text').getall()
-        #     if t.strip()
-        # )
         
         scraped_author = ScrapedAuthorItem()
         scraped_author["title"] = book_title

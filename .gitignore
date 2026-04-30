@@ -30,3 +30,6 @@ Thumbs.db
 
 # OSX miscellaneous
 .DS_Store
+
+exports
+jobdir

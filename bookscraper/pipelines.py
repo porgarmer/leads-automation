@@ -89,7 +89,10 @@ class GoodreadsPipeline:
         adapter["rating"] = self.convert_rating_to_int(rating=adapter["rating"]) if adapter["rating"] else None
         adapter["birthdate"] = self.format_dob(dob=adapter["birthdate"]) if adapter["birthdate"] else None
         adapter["deathdate"] = self.format_death_date(death_date=adapter["deathdate"]) if adapter["deathdate"] else None
-    
+
+        if adapter["rating"] > 4:
+            raise DropItem(f"Book rating is greater than 4 in {item}")
+        
         return item
     
     def clean_about_author(self, about_author):
