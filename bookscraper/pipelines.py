@@ -8,9 +8,11 @@
 from itemadapter import ItemAdapter
 from scrapy.exceptions import DropItem
 from sqlalchemy.exc import IntegrityError
+from sqlalchemy import text
 import re
 import psycopg2
-from db.db import Session
+from db.db import Session as PostgreSession
+from db.db_mysql import Session as MySQLSession
 from db.models import ScrapedAuthor
 from datetime import datetime
 
@@ -82,6 +84,9 @@ class AbePipeline:
         return f"{fname} {lname}"
     
 class GoodreadsPipeline:
+    def __init__(self):
+        self.session = MySQLSession()
+        
     def process_item(self, item, spider):
         adapter = ItemAdapter(item=item)
         
@@ -89,6 +94,9 @@ class GoodreadsPipeline:
         adapter["rating"] = self.convert_rating_to_int(rating=adapter["rating"]) if adapter["rating"] else None
         adapter["birthdate"] = self.format_dob(dob=adapter["birthdate"]) if adapter["birthdate"] else None
         adapter["deathdate"] = self.format_death_date(death_date=adapter["deathdate"]) if adapter["deathdate"] else None
+
+        if self.author_exists_in_company_db(author_name=adapter["author"], spider=spider):
+            raise DropItem(f"Author {adapter['author']} aleady exists in company db")
 
         if adapter["rating"] > 4:
             raise DropItem(f"Book rating is greater than 4 in {item}")
@@ -134,10 +142,35 @@ class GoodreadsPipeline:
             return datetime.strptime(death_date, format2)
         else:
             return None
+        
+    def author_exists_in_company_db(self, author_name, spider):
+        try:
+            # Running a raw SQL query as an example
+            result = self.session.execute(
+                text(f"SELECT * FROM contacts WHERE name = :name"),
+                {"name": author_name}
+            ).mappings().first()
+            
+            return True if result else False
+        except Exception as e:
+            spider.logger.error(f"{e}")
+            return False
+            
+    def mark_author_as_exists(self, author):
+        author.exists_in_company_db = True
+        self.session.commit()
+        
+        
+    def close_spider(self, spider):
+
+        ## Close cursor & connection to database 
+        self.session.close()
+    
+
 
 class SaveToPostgresPipeline:
     def __init__(self):
-        self.session = Session()
+        self.session = PostgreSession()
         
     def process_item(self, item, spider):
         try:
@@ -156,7 +189,8 @@ class SaveToPostgresPipeline:
             self.session.commit()
         except IntegrityError as e:
             self.session.rollback()
-            spider.logger.error(f"DB error: {e}")
+            spider.logger.error(f"Author {item['author']} already exists in DB")
+            
         
         return item
 

@@ -1,19 +1,103 @@
 import scrapy
 from bookscraper.items import ScrapedAuthorItem
+from datetime import datetime
+from scrapy import signals
+from scrapy.exceptions import CloseSpider
+import psutil
+import os
+from db.db import Session
+from sqlalchemy import text
+from config import settings
 
 class GoodreadsSpider(scrapy.Spider):
     name = "goodreads"
     allowed_domains = ["goodreads.com"]
     start_urls = ["https://www.goodreads.com/list/popular_lists"]
 
+    LOCK_ID = 1001
+
     custom_settings = {
-        "JOBDIR": "jobdir/goodreads",
-        "CLOSESPIDER_ITEMCOUNT": 1000,
+        #"JOBDIR": f"jobs/{name}_{datetime.now().strftime('%Y%m%d_%H%M%S')}",
+        "JOBDIR": f"jobdir/{name}",
+        "CLOSESPIDER_ITEMCOUNT": settings.SPIDER_LIMIT,
         "ITEM_PIPELINES": {
             "bookscraper.pipelines.GoodreadsPipeline": 300,
             "bookscraper.pipelines.SaveToPostgresPipeline": 300
         }
     }
+        
+    @classmethod
+    def from_crawler(cls, crawler, *args, **kwargs):
+        spider = super().from_crawler(crawler, *args, **kwargs)
+
+        crawler.signals.connect(
+            spider.spider_opened,
+            signal=signals.spider_opened
+        )
+        
+        crawler.signals.connect(
+            spider.spider_closed,
+            signal=signals.spider_closed
+        )
+
+        return spider
+    
+    def spider_opened(self):
+
+        # # Optional process check
+        # spider_count = 0
+
+        # for proc in psutil.process_iter(['pid', 'cmdline']):
+        #     try:
+        #         cmdline = " ".join(proc.info['cmdline'] or [])
+
+        #         if self.name in cmdline:
+        #             spider_count += 1
+
+        #     except (psutil.NoSuchProcess, psutil.AccessDenied):
+        #         pass
+
+        # if spider_count > 1:
+        #     raise CloseSpider("Another spider instance already running")
+
+        # DB lock
+        self.db_session = Session()
+
+        try:
+            lock_acquired = self.db_session.execute(
+                text("SELECT pg_try_advisory_lock(:lock_id)"),
+                {"lock_id": self.LOCK_ID}
+            ).scalar()
+
+            if not lock_acquired:
+                raise CloseSpider("Another spider instance is already running")
+
+            self.logger.info(f"DB lock acquired: {self.LOCK_ID}")
+
+        except Exception:
+            self.db_session.close()
+            raise
+        
+    def spider_closed(self, spider):
+
+        if not hasattr(self, "db_session"):
+            return
+
+        try:
+            self.db_session.execute(
+                text("SELECT pg_advisory_unlock(:lock_id)"),
+                {"lock_id": self.LOCK_ID}
+            )
+
+            self.db_session.commit()
+
+            self.logger.info(f"DB lock released: {self.LOCK_ID}")
+
+        except Exception as e:
+            self.logger.error(f"Failed to release DB lock: {e}")
+
+        finally:
+            self.db_session.close()
         
     def parse(self, response):
         list_links = response.css('a.listTitle')

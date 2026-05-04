@@ -6,6 +6,7 @@ import logging
 import pandas as pd
 from datetime import datetime
 from zoneinfo import ZoneInfo
+from config import settings
 
 logging.basicConfig(
     level=logging.DEBUG,
@@ -16,11 +17,15 @@ logging.basicConfig(
 def author_exists(session, author_name):
     try:
         # Running a raw SQL query as an example
-        result = session.execute(text(f"SELECT * FROM contacts WHERE name='{author_name}'"))
-        lead = result.fetchone()
-        return True if lead else False
+        result = session.execute(
+                text(f"SELECT * FROM contacts WHERE name = :name"),
+                {"name": author_name}
+            ).mappings().first()
+            
+        return True if result else False
     except Exception as e:
         logging.error(f"{e}")
+        return False
     
 #mark as exists in company db
 def mark_author_as_exists(author):
@@ -34,9 +39,9 @@ def get_unexported_authors(session):
             .filter(
                 Lead.exported == False
             )
+            .limit(settings.EXPORT_LIMIT)
             .all()
         )
-        
         logging.info(f"Fetched {len(unexported_authors)} authors")
         return unexported_authors
     except Exception as e:

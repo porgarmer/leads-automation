@@ -14,6 +14,7 @@ import logging
 from db.db import Session
 from db.models import ScrapedAuthor, Lead
 import traceback
+from config import settings
 
 def create_driver():
     
@@ -247,7 +248,11 @@ def update_author_db_record(session, author):
 def main():
     #Get authors from database
     session = Session()
-    authors = session.query(ScrapedAuthor).filter_by(to_delete=False, author_death_date=None, age_and_addr_filled=True)
+    authors = (
+        session.query(ScrapedAuthor)
+        .filter_by(to_delete=False, author_death_date=None, age_and_addr_filled=True)
+        .limit(settings.VERIPAGES_LIMIT)
+    )
     author_information = {}
     driver = create_driver()
 

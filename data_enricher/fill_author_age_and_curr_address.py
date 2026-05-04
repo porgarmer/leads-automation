@@ -7,6 +7,13 @@ import spacy
 from typing import Optional, Dict, List
 from geopy.geocoders import Nominatim, Geolake
 import time
+import logging
+logging.basicConfig(
+    level=logging.DEBUG,
+    format="%(asctime)s %(levelname)s: %(message)s"
+)
+
+from config import settings
 
 nlp = spacy.load("en_core_web_sm")
 geolocator = Nominatim(user_agent="author-location-parser")
@@ -420,45 +427,72 @@ def extract_current_location(text: str) -> Optional[Dict]:
 
 def fill_author_age_and_curr_address(batch_size=100):
     session = Session()
-
+    
     try:
         last_id = 0
 
-        while True:
-            authors = (
-                session.query(ScrapedAuthor)
-                .filter(ScrapedAuthor.id > last_id) 
-                .filter_by(to_delete=False, age_and_addr_filled=False)
-                .order_by(ScrapedAuthor.id)
-                .limit(batch_size)
-                .all()
+        # while True:
+        #     authors = (
+        #         session.query(ScrapedAuthor)
+        #         .filter(ScrapedAuthor.id > last_id) 
+        #         .filter_by(to_delete=False, age_and_addr_filled=False, author_death_date=None)
+        #         .order_by(ScrapedAuthor.id)
+        #         .limit(settings.AGE_ADDRESS_FILL_LIMIT)
+        #         .all()
+        #     )
+
+        #     if not authors:
+        #         break
+
+        #     for author in authors:
+        #         author.author_age = calculate_age(author.author_birth_date)
+
+        #         location_data = extract_current_location(author.about_author)
+        #         author.author_current_address = (
+        #             location_data.get("location") if location_data else None
+        #         )
+                
+        #         author.author_candidate_address = (
+        #             location_data.get("candidate_locations") if location_data else None
+        #         )
+                
+        #         author.age_and_addr_filled = True
+        #         logging.info(f"{author.author} location and age filled.")
+
+        #         last_id = author.id
+                
+        #         #time.sleep(1.1)
+
+        #     session.commit()
+      
+        authors = (
+            session.query(ScrapedAuthor)
+            #.filter(ScrapedAuthor.id > last_id) 
+            .filter_by(to_delete=False, age_and_addr_filled=False, author_death_date=None)
+            .order_by(ScrapedAuthor.id)
+            .limit(settings.AGE_ADDRESS_FILL_LIMIT)
+            .all()
+        )
+
+        for author in authors:
+            author.author_age = calculate_age(author.author_birth_date)
+
+            location_data = extract_current_location(author.about_author)
+            author.author_current_address = (
+                location_data.get("location") if location_data else None
             )
+            
+            author.author_candidate_address = (
+                location_data.get("candidate_locations") if location_data else None
+            )
+            
+            author.age_and_addr_filled = True
+            logging.info(f"{author.author} location and age filled.")
 
-            if not authors:
-                break
-
-            for author in authors:
-                author.author_age = calculate_age(author.author_birth_date)
-
-                location_data = extract_current_location(author.about_author)
-                author.author_current_address = (
-                    location_data.get("location") if location_data else None
-                )
-                
-                author.author_candidate_address = (
-                    location_data.get("candidate_locations") if location_data else None
-                )
-                
-                author.age_and_addr_filled = True
-                print(f"{author.author}: {location_data}")
-
-                last_id = author.id
-                
-                #time.sleep(1.1)
-
-            session.commit()
-
+        session.commit()
+        
     except Exception:
+        logging.error("An error occured")
         session.rollback()
         raise
 

@@ -75,6 +75,8 @@ class ScrapedAuthor(Base):
     
     to_delete: Mapped[bool] = mapped_column(default=False)
     
+    exists_in_company_db: Mapped[bool] = mapped_column(default=False)
+        
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), 
         default=lambda: datetime.now(timezone.utc)
