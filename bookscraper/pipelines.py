@@ -7,14 +7,13 @@
 # useful for handling different item types with a single interface
 from itemadapter import ItemAdapter
 from scrapy.exceptions import DropItem
-from sqlalchemy.exc import IntegrityError
+from sqlalchemy.exc import IntegrityError, SQLAlchemyError, OperationalError
 from sqlalchemy import text
 import re
-import psycopg2
-from db.db import Session as PostgreSession
-from db.db_company import Session as MySQLSession
+from db.db import Session as Session
 from db.models import ScrapedAuthor
 from datetime import datetime
+import time
 
 class AbePipeline:
     def process_item(self, item, spider):
@@ -85,7 +84,7 @@ class AbePipeline:
     
 class GoodreadsPipeline:
     def __init__(self):
-        self.session = MySQLSession()
+        self.session = Session()
         
     def process_item(self, item, spider):
         adapter = ItemAdapter(item=item)
@@ -168,30 +167,70 @@ class GoodreadsPipeline:
     
 
 
-class SaveToPostgresPipeline:
+class SaveToDBPipeline:
     def __init__(self):
-        self.session = PostgreSession()
+        self.session = Session()
+        
+    def wait_for_db(self, spider):
+        wait_time = 5
+        max_wait = 300  # 5 minutes cap
+        total_wait = 0
+
+        while total_wait < max_wait:
+            try:
+                self.session.execute("SELECT 1")
+                spider.logger.info("DB restored")
+                return
+
+            except Exception:
+                spider.logger.warning(f"DB down. Waiting {wait_time}s...")
+                time.sleep(wait_time)
+
+                total_wait += wait_time
+                wait_time = min(wait_time * 2, 60)
+
+                self.session.close()
+                self.session = Session()
+
+        raise Exception("DB did not recover within timeout window")
         
     def process_item(self, item, spider):
-        try:
-            scraped_author = ScrapedAuthor(
-                author=item["author"],
-                about_author=item["about_author"],
-                author_birth_date=item["birthdate"],
-                author_death_date=item["deathdate"],
-                author_website=item["website"],
-                book_url=item["url"],
-                book_title=item["title"],
-                book_rating=item["rating"]
-            )
-            
-            self.session.add(scraped_author)
-            self.session.commit()
-        except IntegrityError as e:
-            self.session.rollback()
-            spider.logger.error(f"Author {item['author']} already exists in DB")
-            
-        
+        max_retries = 20
+        attempt = 0
+
+        while attempt < max_retries:
+            try:
+                scraped_author = ScrapedAuthor(
+                    author=item["author"],
+                    about_author=item["about_author"],
+                    author_birth_date=item["birthdate"],
+                    author_death_date=item["deathdate"],
+                    author_website=item["website"],
+                    book_url=item["url"],
+                    book_title=item["title"],
+                    book_rating=item["rating"]
+                )
+
+                self.session.add(scraped_author)
+                self.session.commit()
+                return item
+
+            except IntegrityError:
+                self.session.rollback()
+                raise DropItem(f"Duplicate author skipped: {item['author']}")
+
+            except (OperationalError, SQLAlchemyError) as e:
+                self.session.rollback()
+                spider.logger.error(f"DB error: {e}")
+                self.wait_for_db(spider)
+                return item
+
+            except Exception as e:
+                self.session.rollback()
+                spider.logger.error(f"Unexpected error: {e}")
+                return item
+
+        spider.logger.error("Max retries reached. Skipping item.")
         return item
 
     def close_spider(self, spider):

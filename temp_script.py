@@ -1,5 +1,4 @@
-from db.db import Session as PostgreSession
-from db.db_company import Session as MySQLSession
+from db.db import Session as Session
 from sqlalchemy import text
 from db.models import ScrapedAuthor
 import logging
@@ -31,23 +30,22 @@ def mark_author_as_exists(author):
     author.exists_in_company_db = True
     
 def main():
-    postgresession = PostgreSession()
-    mysqlsession = MySQLSession()
+    session = Session()
     
-    scaped_authors = postgresession.query(ScrapedAuthor).all()
+    scaped_authors = session.query(ScrapedAuthor).all()
     
     try:
         for author in scaped_authors:
-            if author_exists(session=mysqlsession, author_name=author.author):
+            if author_exists(session=session, author_name=author.author):
                 mark_author_as_exists(author=author)
             else:
                 logging.info(f"Author {author.author} does not exist in company DB")
-        logging.info("About to commit Postgres session...")
-        postgresession.commit()
+        logging.info("About to commit session...")
+        session.commit()
         logging.info("Commit successful")
     except Exception as e:
         logging.error(f"{e}")
     finally:
-        postgresession.close()
+        session.close()
         
 main()

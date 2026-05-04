@@ -1,5 +1,4 @@
-from db.db_company import Session as mysql_session
-from db.db import Session as postgre_session
+from db.db import Session
 from db.models import Lead
 from sqlalchemy import text
 import logging
@@ -53,11 +52,10 @@ def mark_author_as_exported( author):
       
 def export_authors():
     
-    mysqlsession = mysql_session()
-    postgresession = postgre_session()
+    session = Session()
     
     try:
-        unexported_authors = get_unexported_authors(session=postgresession)
+        unexported_authors = get_unexported_authors(session=session)
         
         export_rows = []
         
@@ -67,7 +65,7 @@ def export_authors():
         exists = 0
         for author in unexported_authors:
             
-            if author_exists(session=mysqlsession, author_name=author.author):
+            if author_exists(session=session, author_name=author.author):
                 mark_author_as_exists(author=author)
                 exists += 1
                 continue
@@ -91,17 +89,17 @@ def export_authors():
             file_path = create_filepath(current_date=current_date)
             df.to_excel(file_path, index=False)
             
-        postgresession.commit()
+        session.commit()
             
         logging.info(f"{exists} already exists in the company db. Successfully exported {exported} authors")
     
     except Exception as e:
-        postgresession.rollback()
+        session.rollback()
         logging.error(e)
 
     finally:
-        mysqlsession.close()
-        postgresession.close()
+        session.close()
+        session.close()
     
     
 def create_filepath(current_date):

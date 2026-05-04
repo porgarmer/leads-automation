@@ -22,7 +22,7 @@ class GoodreadsSpider(scrapy.Spider):
         "CLOSESPIDER_ITEMCOUNT": settings.SPIDER_LIMIT,
         "ITEM_PIPELINES": {
             "bookscraper.pipelines.GoodreadsPipeline": 300,
-            "bookscraper.pipelines.SaveToPostgresPipeline": 300
+            "bookscraper.pipelines.SaveToDBPipeline": 300
         }
     }
         
@@ -43,37 +43,34 @@ class GoodreadsSpider(scrapy.Spider):
         return spider
     
     def spider_opened(self):
-
-        # # Optional process check
-        # spider_count = 0
-
-        # for proc in psutil.process_iter(['pid', 'cmdline']):
-        #     try:
-        #         cmdline = " ".join(proc.info['cmdline'] or [])
-
-        #         if self.name in cmdline:
-        #             spider_count += 1
-
-        #     except (psutil.NoSuchProcess, psutil.AccessDenied):
-        #         pass
-
-        # if spider_count > 1:
-        #     raise CloseSpider("Another spider instance already running")
-
         # DB lock
         self.db_session = Session()
 
+        # try:
+        #     lock_acquired = self.db_session.execute(
+        #         text("SELECT pg_try_advisory_lock(:lock_id)"),
+        #         {"lock_id": self.LOCK_ID}
+        #     ).scalar()
+
+        #     if not lock_acquired:
+        #         raise CloseSpider("Another spider instance is already running")
+
+        #     self.logger.info(f"DB lock acquired: {self.LOCK_ID}")
+
+        # except Exception:
+        #     self.db_session.close()
+        #     raise
+        
         try:
-            lock_acquired = self.db_session.execute(
-                text("SELECT pg_try_advisory_lock(:lock_id)"),
-                {"lock_id": self.LOCK_ID}
+            result = self.db_session.execute(
+            text("SELECT GET_LOCK(:name, 10)"),
+                {"name": self.name}
             ).scalar()
 
-            if not lock_acquired:
+            if result != 1:
                 raise CloseSpider("Another spider instance is already running")
 
-            self.logger.info(f"DB lock acquired: {self.LOCK_ID}")
-
+            self.logger.info("MySQL lock acquired")
         except Exception:
             self.db_session.close()
             raise
@@ -83,22 +80,33 @@ class GoodreadsSpider(scrapy.Spider):
         if not hasattr(self, "db_session"):
             return
 
+        # try:
+        #     self.db_session.execute(
+        #         text("SELECT pg_advisory_unlock(:lock_id)"),
+        #         {"lock_id": self.LOCK_ID}
+        #     )
+
+        #     self.db_session.commit()
+
+        #     self.logger.info(f"DB lock released: {self.LOCK_ID}")
+
+        # except Exception as e:
+        #     self.logger.error(f"Failed to release DB lock: {e}")
+
+        # finally:
+        #     self.db_session.close()
         try:
             self.db_session.execute(
-                text("SELECT pg_advisory_unlock(:lock_id)"),
-                {"lock_id": self.LOCK_ID}
+                text("SELECT RELEASE_LOCK(:name)"),
+                {"name": "author_spider"}
             )
-
             self.db_session.commit()
-
-            self.logger.info(f"DB lock released: {self.LOCK_ID}")
-
+            self.logger.info("MySQL lock released")
         except Exception as e:
-            self.logger.error(f"Failed to release DB lock: {e}")
-
+            self.logger.error(f"Failed to release lock: {e}")
         finally:
             self.db_session.close()
-        
+            
     def parse(self, response):
         list_links = response.css('a.listTitle')
         

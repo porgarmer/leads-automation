@@ -1,20 +1,22 @@
 from sqlalchemy.orm import Mapped, mapped_column
 from typing import Optional
-from sqlalchemy import Date, DateTime, Float, String, ARRAY
+from sqlalchemy import Date, DateTime, Float, String, ARRAY, Text
 from datetime import date, datetime, timezone
 from .db import Base
+from sqlalchemy.ext.mutable import MutableList
+from sqlalchemy import JSON
 
 class Lead(Base):
-    __tablename__ = "lead"
+    __tablename__ = "leads"
     
     id: Mapped[int] = mapped_column(primary_key=True, index=True)
-    author: Mapped[str]
-    author_email: Mapped[str] = mapped_column(nullable=True, default=None)
-    author_contact_num: Mapped[str] = mapped_column(nullable=True, default=None)
-    author_address: Mapped[str] = mapped_column(nullable=True, default=None)
+    author: Mapped[str] = mapped_column(String(255))
+    author_email: Mapped[str] = mapped_column(String(255), nullable=True, default=None)
+    author_contact_num: Mapped[str] = mapped_column(String(255), nullable=True, default=None)
+    author_address: Mapped[str] = mapped_column(String(255), nullable=True, default=None)
     
-    book_url: Mapped[str]
-    book_title: Mapped[str] 
+    book_url: Mapped[str] = mapped_column(String(255))
+    book_title: Mapped[str] = mapped_column(String(255))
     book_rating: Mapped[float] = mapped_column(Float)
     
     information_filled: Mapped[bool] = mapped_column(default=False)
@@ -59,16 +61,16 @@ class ScrapedAuthor(Base):
     __tablename__ = "scraped_author"
     
     id: Mapped[int] = mapped_column(primary_key=True, index=True)
-    author: Mapped[str] = mapped_column(unique=True)
-    about_author: Mapped[Optional[str]]
+    author: Mapped[str] = mapped_column(String(255), unique=True)
+    about_author: Mapped[Optional[str]] = mapped_column(Text)
     author_birth_date: Mapped[Optional[date]] = mapped_column(Date)
     author_death_date: Mapped[Optional[date]] = mapped_column(Date)
-    author_website: Mapped[Optional[str]] = mapped_column()
+    author_website: Mapped[Optional[str]] = mapped_column(String(255))
     author_age: Mapped[Optional[int]] = mapped_column()
-    author_current_address: Mapped[Optional[str]] = mapped_column()
-    author_candidate_address: Mapped[list[str]] = mapped_column(ARRAY(String))
-    book_url: Mapped[str] 
-    book_title: Mapped[str] 
+    author_current_address: Mapped[Optional[str]] = mapped_column(String(255))
+    author_candidate_address: Mapped[list[str]] = mapped_column(MutableList.as_mutable(JSON))
+    book_url: Mapped[str] = mapped_column(String(255))
+    book_title: Mapped[str] = mapped_column(String(255))
     book_rating: Mapped[float] = mapped_column(Float)
     
     age_and_addr_filled: Mapped[bool] = mapped_column(default=False)

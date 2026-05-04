@@ -242,8 +242,6 @@ def update_author_db_record(session, author):
     author = session.query(ScrapedAuthor).filter_by(id=author["id"]).first()
     if author:
         author.to_delete = True
-    
-    session.commit()
 
 def main():
     #Get authors from database
@@ -255,17 +253,22 @@ def main():
     )
     author_information = {}
     driver = create_driver()
-
-    for author in authors:
-        author = author.to_dict()
-        print(f"{author}\n")
-        author_name = author["author"]
-        info = scrape_author_information(driver=driver, author_name=author_name, author=author)
-        author_information[author_name] = info
-        add_lead(session=session, author=author, author_info=info)
-        update_author_db_record(session=session, author=author)
+    try:
+        for author in authors:
+            author = author.to_dict()
+            print(f"{author}\n")
+            author_name = author["author"]
+            info = scrape_author_information(driver=driver, author_name=author_name, author=author)
+            author_information[author_name] = info
+            add_lead(session=session, author=author, author_info=info)
+            update_author_db_record(session=session, author=author)
         
-    driver.quit()
+        session.commit()
+        driver.quit()
+    except Exception as e:
+        traceback.print_exc(e)
+        session.rollback()
+    
     print(author_information)
   
     
