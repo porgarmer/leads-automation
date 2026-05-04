@@ -1,4 +1,4 @@
-from db.db_mysql import Session as mysql_session
+from db.db_company import Session as mysql_session
 from db.db import Session as postgre_session
 from db.models import Lead
 from sqlalchemy import text

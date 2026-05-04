@@ -1,5 +1,5 @@
 from db.db import Session as PostgreSession
-from db.db_mysql import Session as MySQLSession
+from db.db_company import Session as MySQLSession
 from sqlalchemy import text
 from db.models import ScrapedAuthor
 import logging

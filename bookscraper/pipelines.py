@@ -12,7 +12,7 @@ from sqlalchemy import text
 import re
 import psycopg2
 from db.db import Session as PostgreSession
-from db.db_mysql import Session as MySQLSession
+from db.db_company import Session as MySQLSession
 from db.models import ScrapedAuthor
 from datetime import datetime
 
