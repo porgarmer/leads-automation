@@ -15,6 +15,10 @@ from db.db import Session
 from db.models import ScrapedAuthor, Lead
 import traceback
 from config import settings
+logging.basicConfig(
+    level=logging.DEBUG,
+    format="%(asctime)s %(levelname)s: %(message)s"
+)
 
 def create_driver():
     
@@ -99,7 +103,6 @@ def get_best_possible_match(driver, author):
                         item_age = int(match.group(1)) if match else None
                     except:
                         pass
-            print("ITEM AGE: ", item_age)
             
             has_lived_sections = item.find_elements(
                 By.XPATH,
@@ -130,15 +133,13 @@ def get_best_possible_match(driver, author):
                 if abs(age - item_age) <= 1:
                        score += 25
             
-            print(f"SCORE: {score} \n")
-            
             # Save best
             if score > best_score:
                 best_score = score
                 best_item = item
             
         except Exception as e:
-            print(e)
+            logging.error(e)
         
     return best_item if best_item else items[0]
 

@@ -1,0 +1,16 @@
+2026-05-06 02:27:53,931 INFO: Daily pipeline started
+2026-05-06 02:27:53,932 INFO: Staring: Export to Excel
+2026-05-06 02:27:58,358 INFO: Fetched 10 authors
+2026-05-06 02:27:58,532 INFO: Author Sophie Jordan already exists in company db
+2026-05-06 02:27:58,687 INFO: Author Jennifer L. Armentrout already exists in company db
+2026-05-06 02:27:58,839 INFO: Author Margaret Peterson Haddix already exists in company db
+2026-05-06 02:27:58,986 INFO: Author Georgi Gospodinov already exists in company db
+2026-05-06 02:27:59,136 INFO: Author Ann Aguirre already exists in company db
+2026-05-06 02:27:59,293 INFO: Author Caroline Linden already exists in company db
+2026-05-06 02:27:59,448 INFO: Author Lauren Layne already exists in company db
+2026-05-06 02:27:59,594 INFO: Author Rainbow Rowell already exists in company db
+2026-05-06 02:27:59,745 INFO: Author Samantha Young already exists in company db
+2026-05-06 02:27:59,901 INFO: Author Alexis Daria already exists in company db
+2026-05-06 02:27:59,929 INFO: 10 already exists in the company db. Successfully exported 0 authors
+2026-05-06 02:28:00,454 INFO: Completed Export to Excel
+2026-05-06 02:28:00,454 INFO: Pipeline completed successully

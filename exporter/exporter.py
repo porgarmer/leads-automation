@@ -67,6 +67,7 @@ def export_authors():
             
             if author_exists(session=session, author_name=author.author):
                 mark_author_as_exists(author=author)
+                mark_author_as_exported(author=author)
                 exists += 1
                 continue
             else:
