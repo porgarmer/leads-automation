@@ -15,6 +15,7 @@ from db.db import Session
 from db.models import ScrapedAuthor, Lead
 import traceback
 from config import settings
+from rapidfuzz import fuzz
 logging.basicConfig(
     level=logging.DEBUG,
     format="%(asctime)s %(levelname)s: %(message)s"
@@ -87,7 +88,7 @@ def get_best_possible_match(driver, author):
     best_item = None
     best_score = -1
     
-    for item in items:
+    for item, index in zip(items, range(len(item))):
 
         score = 0
         try:
@@ -118,13 +119,14 @@ def get_best_possible_match(driver, author):
                 ]
             
             # Address match
-            if current_address.lower():
-                if current_address in item_addresses:
+            if current_address:
+                if any((fuzz.partial_ratio(current_address.lower(), a) > 70 for a in item_addresses)):
+                #if current_address in item_addresses:
                     score+=50
             
             # Candidate address fallback    
             for addr in candidate_addresses:
-                if addr.lower() in item_addresses:
+                if any((fuzz.partial_ratio(addr.lower(), a) > 70 for a in item_addresses)):
                     score+=35
                     break
             
@@ -138,9 +140,11 @@ def get_best_possible_match(driver, author):
                 best_score = score
                 best_item = item
             
+            logging.info(f"Best item index: {index}. Age: {age}. Addreses: {item_addresses} Score: {best_score}")
+            
         except Exception as e:
             logging.error(e)
-        
+            traceback.print_exc(e)
     return best_item if best_item else items[0]
 
 def scrape_author_information(driver, author_name, author):   
@@ -263,7 +267,9 @@ def main():
             author_information[author_name] = info
             add_lead(session=session, author=author, author_info=info)
             update_author_db_record(session=session, author=author)
-        
+            
+            logging.info(f"{author_name}'s information scraped")
+            
         session.commit()
         driver.quit()
     except Exception as e:
