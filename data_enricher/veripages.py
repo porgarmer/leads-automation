@@ -88,7 +88,7 @@ def get_best_possible_match(driver, author):
     best_item = None
     best_score = -1
     
-    for item, index in zip(items, range(len(item))):
+    for item, index in zip(items, range(len(items))):
 
         score = 0
         try:
@@ -131,7 +131,7 @@ def get_best_possible_match(driver, author):
                     break
             
             # Age match
-            if item_age:
+            if age and item_age:
                 if abs(age - item_age) <= 1:
                        score += 25
             
@@ -140,7 +140,7 @@ def get_best_possible_match(driver, author):
                 best_score = score
                 best_item = item
             
-            logging.info(f"Best item index: {index}. Age: {age}. Addreses: {item_addresses} Score: {best_score}")
+            logging.info(f"Best item index: {index}. Age: {item_age}. Addreses: {item_addresses} Score: {best_score}")
             
         except Exception as e:
             logging.error(e)
