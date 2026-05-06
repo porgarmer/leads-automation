@@ -64,9 +64,10 @@ DOWNLOADER_MIDDLEWARES = {
 
 # Enable or disable extensions
 # See https://docs.scrapy.org/en/latest/topics/extensions.html
-#EXTENSIONS = {
-#    "scrapy.extensions.telnet.TelnetConsole": None,
-#}
+EXTENSIONS = {
+   #"scrapy.extensions.telnet.TelnetConsole": None,
+   "bookscraper.extensions.RedisSpiderState": 500
+}
 
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
@@ -98,3 +99,8 @@ AUTOTHROTTLE_ENABLED = True
 
 # Set settings whose default value is deprecated to a future-proof value
 FEED_EXPORT_ENCODING = "utf-8"
+
+REDIS_STATE_AUTO_SAVE_SECONDS = 300
+SCHEDULER = "scrapy_redis.scheduler.Scheduler"
+DUPEFILTER_CLASS = "scrapy_redis.dupefilter.RFPDupeFilter"
+REDIS_URL = "redis://localhost:6379/0"

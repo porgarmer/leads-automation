@@ -14,3 +14,712 @@
 2026-05-06 02:27:59,929 INFO: 10 already exists in the company db. Successfully exported 0 authors
 2026-05-06 02:28:00,454 INFO: Completed Export to Excel
 2026-05-06 02:28:00,454 INFO: Pipeline completed successully
+2026-05-06 04:22:12,934 INFO: Daily pipeline started
+2026-05-06 04:22:12,935 INFO: Staring: Fill Age + Current Address
+2026-05-06 04:22:43,933 DEBUG: Converted retries value: 2 -> Retry(total=2, connect=None, read=None, redirect=None, status=None)
+2026-05-06 04:22:43,933 DEBUG: Converted retries value: 2 -> Retry(total=2, connect=None, read=None, redirect=None, status=None)
+2026-05-06 04:22:43,994 INFO: Christopher Nyerges location and age filled.
+2026-05-06 04:22:43,994 INFO: Guy A. Johnson location and age filled.
+2026-05-06 04:22:44,095 DEBUG: Nominatim.geocode: https://nominatim.openstreetmap.org/search?q=New+York+City&format=json&countrycodes=us&addressdetails=1
+2026-05-06 04:22:44,096 DEBUG: Starting new HTTPS connection (1): nominatim.openstreetmap.org:443
+2026-05-06 04:22:45,332 DEBUG: Incremented Retry for (url='/search?q=New+York+City&format=json&countrycodes=us&addressdetails=1'): Retry(total=1, connect=None, read=None, redirect=None, status=None)
+2026-05-06 04:22:45,333 WARNING: Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ReadTimeoutError("HTTPSConnectionPool(host='nominatim.openstreetmap.org', port=443): Read timed out. (read timeout=1)")': /search?q=New+York+City&format=json&countrycodes=us&addressdetails=1
+2026-05-06 04:22:45,334 DEBUG: Starting new HTTPS connection (2): nominatim.openstreetmap.org:443
+2026-05-06 04:22:45,550 DEBUG: https://nominatim.openstreetmap.org:443 "GET /search?q=New+York+City&format=json&countrycodes=us&addressdetails=1 HTTP/1.1" 200 367
+2026-05-06 04:22:45,552 INFO: John Twelve Hawks location and age filled.
+2026-05-06 04:22:45,553 INFO: S.M.  Wilson location and age filled.
+2026-05-06 04:22:45,630 INFO: Kellee L. Greene location and age filled.
+2026-05-06 04:22:45,630 INFO: Lucas Accardo location and age filled.
+2026-05-06 04:22:45,630 INFO: Charlotte Paul location and age filled.
+2026-05-06 04:22:45,711 DEBUG: Nominatim.geocode: https://nominatim.openstreetmap.org/search?q=Dublin&format=json&countrycodes=us&addressdetails=1
+2026-05-06 04:22:46,520 DEBUG: https://nominatim.openstreetmap.org:443 "GET /search?q=Dublin&format=json&countrycodes=us&addressdetails=1 HTTP/1.1" 200 1441
+2026-05-06 04:22:46,523 INFO: John Connolly location and age filled.
+2026-05-06 04:22:46,750 DEBUG: Nominatim.geocode: https://nominatim.openstreetmap.org/search?q=England&format=json&countrycodes=us&addressdetails=1
+2026-05-06 04:22:47,579 DEBUG: https://nominatim.openstreetmap.org:443 "GET /search?q=England&format=json&countrycodes=us&addressdetails=1 HTTP/1.1" 200 765
+2026-05-06 04:22:47,623 INFO: Michelle Muckley location and age filled.
+2026-05-06 04:22:47,623 INFO: Craig Buckhout location and age filled.
+2026-05-06 04:22:48,744 INFO: Completed Fill Age + Current Address
+2026-05-06 04:22:48,744 INFO: Staring: Veripages Enrichment
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Leads automation\leads-automation\data_enricher\veripages.py", line 18, in <module>
+    from rapidfuzz import fuzz
+ModuleNotFoundError: No module named 'rapidfuzz'
+2026-05-06 04:22:52,629 ERROR: Failed Veripages Enrichment
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Leads automation\leads-automation\master_pipeline\master_pipeline.py", line 37, in <module>
+    run_step(
+    ~~~~~~~~^
+        "Veripages Enrichment",
+        ^^^^^^^^^^^^^^^^^^^^^^^
+        "python -m data_enricher.veripages"
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Leads automation\leads-automation\master_pipeline\master_pipeline.py", line 18, in run_step
+    raise Exception(f"Pipeline stopped at {name}")
+Exception: Pipeline stopped at Veripages Enrichment
+Retrying... 
+2026-05-06 04:22:52,996 INFO: Daily pipeline started
+2026-05-06 04:22:52,997 INFO: Staring: Fill Age + Current Address
+2026-05-06 04:23:08,440 DEBUG: Converted retries value: 2 -> Retry(total=2, connect=None, read=None, redirect=None, status=None)
+2026-05-06 04:23:08,440 DEBUG: Converted retries value: 2 -> Retry(total=2, connect=None, read=None, redirect=None, status=None)
+2026-05-06 04:23:08,564 INFO: Elana Gomel location and age filled.
+2026-05-06 04:23:08,670 DEBUG: Nominatim.geocode: https://nominatim.openstreetmap.org/search?q=San+Francisco&format=json&countrycodes=us&addressdetails=1
+2026-05-06 04:23:08,672 DEBUG: Starting new HTTPS connection (1): nominatim.openstreetmap.org:443
+2026-05-06 04:23:09,749 DEBUG: https://nominatim.openstreetmap.org:443 "GET /search?q=San+Francisco&format=json&countrycodes=us&addressdetails=1 HTTP/1.1" 200 384
+2026-05-06 04:23:09,751 INFO: Mark Hertsgaard location and age filled.
+2026-05-06 04:23:09,751 INFO: Martín Lígori location and age filled.
+2026-05-06 04:23:09,751 INFO: Ricardo Ferrari location and age filled.
+2026-05-06 04:23:09,812 INFO: Jeph Loeb location and age filled.
+2026-05-06 04:23:09,903 INFO: Salvador Sanz location and age filled.
+2026-05-06 04:23:09,986 INFO: Robert Kirkman location and age filled.
+2026-05-06 04:23:10,042 INFO: Don Roff location and age filled.
+2026-05-06 04:23:10,120 INFO: Tsutomu Nihei location and age filled.
+2026-05-06 04:23:10,120 INFO: David Dvorkin location and age filled.
+2026-05-06 04:23:11,246 INFO: Completed Fill Age + Current Address
+2026-05-06 04:23:11,246 INFO: Staring: Veripages Enrichment
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Leads automation\leads-automation\data_enricher\veripages.py", line 18, in <module>
+    from rapidfuzz import fuzz
+ModuleNotFoundError: No module named 'rapidfuzz'
+2026-05-06 04:23:15,557 ERROR: Failed Veripages Enrichment
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Leads automation\leads-automation\master_pipeline\master_pipeline.py", line 37, in <module>
+    run_step(
+    ~~~~~~~~^
+        "Veripages Enrichment",
+        ^^^^^^^^^^^^^^^^^^^^^^^
+        "python -m data_enricher.veripages"
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Leads automation\leads-automation\master_pipeline\master_pipeline.py", line 18, in run_step
+    raise Exception(f"Pipeline stopped at {name}")
+Exception: Pipeline stopped at Veripages Enrichment
+2026-05-06 04:26:28,170 INFO: Daily pipeline started
+2026-05-06 04:26:28,171 INFO: Staring: Fill Age + Current Address
+2026-05-06 04:26:48,525 DEBUG: Converted retries value: 2 -> Retry(total=2, connect=None, read=None, redirect=None, status=None)
+2026-05-06 04:26:48,525 DEBUG: Converted retries value: 2 -> Retry(total=2, connect=None, read=None, redirect=None, status=None)
+2026-05-06 04:26:48,591 INFO: Michele W. Miller location and age filled.
+2026-05-06 04:26:48,705 DEBUG: Nominatim.geocode: https://nominatim.openstreetmap.org/search?q=Denver&format=json&countrycodes=us&addressdetails=1
+2026-05-06 04:26:48,708 DEBUG: Starting new HTTPS connection (1): nominatim.openstreetmap.org:443
+2026-05-06 04:26:49,600 DEBUG: https://nominatim.openstreetmap.org:443 "GET /search?q=Denver&format=json&countrycodes=us&addressdetails=1 HTTP/1.1" 200 728
+2026-05-06 04:26:49,602 INFO: Peter Heller location and age filled.
+2026-05-06 04:26:49,645 INFO: Kengo Hanazawa location and age filled.
+2026-05-06 04:26:49,693 INFO: Levi Doone location and age filled.
+2026-05-06 04:26:49,763 INFO: Joseph Massucci location and age filled.
+2026-05-06 04:26:49,763 INFO: Lars Wilderäng location and age filled.
+2026-05-06 04:26:49,821 INFO: Hiroya Oku location and age filled.
+2026-05-06 04:26:50,022 DEBUG: Nominatim.geocode: https://nominatim.openstreetmap.org/search?q=Los+Angeles&format=json&countrycodes=us&addressdetails=1
+2026-05-06 04:26:50,463 DEBUG: https://nominatim.openstreetmap.org:443 "GET /search?q=Los+Angeles&format=json&countrycodes=us&addressdetails=1 HTTP/1.1" 200 495
+2026-05-06 04:26:50,465 INFO: Alexandra Monir location and age filled.
+2026-05-06 04:26:50,465 INFO: Shelbi Wescott location and age filled.
+2026-05-06 04:26:50,578 DEBUG: Nominatim.geocode: https://nominatim.openstreetmap.org/search?q=Annabelle&format=json&countrycodes=us&addressdetails=1
+2026-05-06 04:26:50,926 DEBUG: https://nominatim.openstreetmap.org:443 "GET /search?q=Annabelle&format=json&countrycodes=us&addressdetails=1 HTTP/1.1" 200 709
+2026-05-06 04:26:50,954 INFO: Annabelle McInnes location and age filled.
+2026-05-06 04:26:52,288 INFO: Completed Fill Age + Current Address
+2026-05-06 04:26:52,289 INFO: Staring: Veripages Enrichment
+2026-05-06 04:26:59,579 DEBUG: Attempting to acquire lock 2075578430000 on downloaded_files/pyautogui.lock
+2026-05-06 04:26:59,581 DEBUG: Lock 2075578430000 acquired on downloaded_files/pyautogui.lock
+2026-05-06 04:26:59,602 DEBUG: Attempting to release lock 2075578430000 on downloaded_files/pyautogui.lock
+2026-05-06 04:26:59,605 DEBUG: Lock 2075578430000 released on downloaded_files/pyautogui.lock
+2026-05-06 04:26:59,606 DEBUG: Skipping Selenium Manager; path to chrome driver specified in Service class: C:\Leads automation\leads-automation\venv\Lib\site-packages\seleniumbase\drivers\uc_driver.exe
+2026-05-06 04:26:59,616 DEBUG: Started executable: `C:\Leads automation\leads-automation\venv\Lib\site-packages\seleniumbase\drivers\uc_driver.exe` in a child process with pid: 2824 using 134217728 to output -1
+2026-05-06 04:27:02,952 DEBUG: Started executable: `C:\Leads automation\leads-automation\venv\Lib\site-packages\seleniumbase\drivers\uc_driver.exe` in a child process with pid: 10740 using 134217728 to output -1
+{'id': 721, 'author': 'Christopher Nyerges', 'about_author': None, 'author_birth_date': None, 'author_death_date': None, 'author_website': None, 'author_age': None, 'author_current_address': None, 'author_candidate_address': None, 'book_url': 'https://www.goodreads.com/book/show/317533.How_to_Survive_Anywhere', 'book_title': 'How to Survive Anywhere', 'book_rating': 3.55}
+
+2026-05-06 04:27:10,687 DEBUG: Started executable: `C:\Leads automation\leads-automation\venv\Lib\site-packages\seleniumbase\drivers\uc_driver.exe` in a child process with pid: 11748 using 134217728 to output -1
+2026-05-06 04:27:11,532 DEBUG: Attempting to acquire lock 2075579082832 on downloaded_files/pyautogui.lock
+2026-05-06 04:27:11,534 DEBUG: Lock 2075579082832 acquired on downloaded_files/pyautogui.lock
+2026-05-06 04:27:11,537 DEBUG: Attempting to release lock 2075579082832 on downloaded_files/pyautogui.lock
+2026-05-06 04:27:11,538 DEBUG: Lock 2075579082832 released on downloaded_files/pyautogui.lock
+2026-05-06 04:27:40,496 INFO: Christopher Nyerges's information scraped
+{'id': 722, 'author': 'Guy A. Johnson', 'about_author': None, 'author_birth_date': None, 'author_death_date': None, 'author_website': None, 'author_age': None, 'author_current_address': None, 'author_candidate_address': None, 'book_url': 'https://www.goodreads.com/book/show/22706693-submersion', 'book_title': 'Submersion', 'book_rating': 3.93}
+
+2026-05-06 04:27:46,809 DEBUG: Started executable: `C:\Leads automation\leads-automation\venv\Lib\site-packages\seleniumbase\drivers\uc_driver.exe` in a child process with pid: 9748 using 134217728 to output -1
+2026-05-06 04:27:47,450 DEBUG: Attempting to acquire lock 2075579084752 on downloaded_files/pyautogui.lock
+2026-05-06 04:27:47,452 DEBUG: Lock 2075579084752 acquired on downloaded_files/pyautogui.lock
+2026-05-06 04:27:47,455 DEBUG: Attempting to release lock 2075579084752 on downloaded_files/pyautogui.lock
+2026-05-06 04:27:47,457 DEBUG: Lock 2075579084752 released on downloaded_files/pyautogui.lock
+2026-05-06 04:28:11,372 INFO: Guy A. Johnson's information scraped
+{'id': 723, 'author': 'John Twelve Hawks', 'about_author': 'John Twelve Hawks is the author of the New York Times bestseller The Traveler, the first book in a trilogy that includes The Dark River and The Golden City. The Fourth Realm Trilogy has been translated into twenty-five languages. Known as JTH by his readers, he followed the trilogy with Spark, a stand-alone novel, and Against Authority: Freedom and the Rise of the Surveillance States,. His new novel, Certainty, will be published on April 28, 2026. For more than twenty years, JTH has lived a deliberately “anonymous life” to show his resistance to the continual government and corporate attack on privacy. He has discussed his life choices in a published essay, “Writing as the Sky Rains Death.” JTH worked as a war correspondent and turned to fiction to understand a fractured reality. Like several of his characters, he has lived in New York City, Los Angeles, and rural Ireland. Hawk_', 'author_birth_date': None, 'author_death_date': None, 'author_website': 'http://www.johntwelvehawks.com', 'author_age': None, 'author_current_address': 'New York, NY', 'author_candidate_address': ['New York, NY'], 'book_url': 'https://www.goodreads.com/book/show/1262341.The_Dark_River', 'book_title': 'The Dark River', 'book_rating': 3.79}
+
+2026-05-06 04:28:17,946 DEBUG: Started executable: `C:\Leads automation\leads-automation\venv\Lib\site-packages\seleniumbase\drivers\uc_driver.exe` in a child process with pid: 5904 using 134217728 to output -1
+2026-05-06 04:28:19,097 DEBUG: Attempting to acquire lock 2075578547120 on downloaded_files/pyautogui.lock
+2026-05-06 04:28:19,099 DEBUG: Lock 2075578547120 acquired on downloaded_files/pyautogui.lock
+2026-05-06 04:28:19,104 DEBUG: Attempting to release lock 2075578547120 on downloaded_files/pyautogui.lock
+2026-05-06 04:28:19,106 DEBUG: Lock 2075578547120 released on downloaded_files/pyautogui.lock
+2026-05-06 04:28:31,816 INFO: Best item index: 0. Age: 54. Addreses: ['mansfield, tx', 'brownwood, tx', 'arlington, tx', 'garwood, tx'] Score: 0
+2026-05-06 04:28:31,935 INFO: Best item index: 1. Age: 69. Addreses: ['kernersville, nc', 'greensboro, nc', 'pleasant garden, nc', 'mount airy, nc'] Score: 0
+2026-05-06 04:28:32,062 INFO: Best item index: 2. Age: 56. Addreses: ['parsons, ks', 'lawrence, ks', 'montrose, co', 'olathe, co'] Score: 0
+2026-05-06 04:28:32,192 INFO: Best item index: 3. Age: 67. Addreses: ['conway, ar', 'ash flat, ar', 'moab, ut', 'greenbrier, ar'] Score: 0
+2026-05-06 04:28:32,332 INFO: Best item index: 4. Age: 89. Addreses: ['carmel, in', 'fishers, in', 'indianapolis, in', 'naples, fl'] Score: 0
+2026-05-06 04:28:32,465 INFO: Best item index: 5. Age: 68. Addreses: ['miami, fl', 'lake wales, fl', 'st petersburg, fl', 'saint petersburg, fl'] Score: 0
+2026-05-06 04:28:32,592 INFO: Best item index: 6. Age: 51. Addreses: ['king, nc', 'pilot mountain, nc', 'bend, or', 'portland, or'] Score: 0
+2026-05-06 04:28:32,723 INFO: Best item index: 7. Age: 64. Addreses: ['hernando, fl', 'ocala, fl', 'lecanto, fl', 'inverness, fl'] Score: 0
+2026-05-06 04:28:32,828 INFO: Best item index: 8. Age: 93. Addreses: ['mount airy, nc', 'raleigh, nc', 'rch cucamonga, ca'] Score: 0
+2026-05-06 04:28:32,957 INFO: Best item index: 9. Age: 74. Addreses: ['palm desert, ca', 'walnut creek, ca', 'centreville, va', 'lafayette, ca'] Score: 0
+2026-05-06 04:28:46,711 INFO: John Twelve Hawks's information scraped
+{'id': 724, 'author': 'S.M.  Wilson', 'about_author': None, 'author_birth_date': None, 'author_death_date': None, 'author_website': None, 'author_age': None, 'author_current_address': None, 'author_candidate_address': None, 'book_url': 'https://www.goodreads.com/book/show/37564139-the-extinction-trials', 'book_title': 'The Extinction Trials', 'book_rating': 3.88}
+
+2026-05-06 04:28:53,041 DEBUG: Started executable: `C:\Leads automation\leads-automation\venv\Lib\site-packages\seleniumbase\drivers\uc_driver.exe` in a child process with pid: 2468 using 134217728 to output -1
+2026-05-06 04:28:53,689 DEBUG: Attempting to acquire lock 2075578547728 on downloaded_files/pyautogui.lock
+2026-05-06 04:28:53,692 DEBUG: Lock 2075578547728 acquired on downloaded_files/pyautogui.lock
+2026-05-06 04:28:53,696 DEBUG: Attempting to release lock 2075578547728 on downloaded_files/pyautogui.lock
+2026-05-06 04:28:53,697 DEBUG: Lock 2075578547728 released on downloaded_files/pyautogui.lock
+2026-05-06 04:29:03,985 INFO: S.M.  Wilson's information scraped
+{'id': 725, 'author': 'Kellee L. Greene', 'about_author': "Kellee L. Greene is a stay-at-home mom to two super awesome and wonderfully sassy children. She loves to read, draw, and spend time with her family when she's not writing. Writing and having people read her books has been a long time dream of hers and she's excited to write more. Her favorite genres are Fantasy and Sci-fi. Kellee lives in Wisconsin with her husband, two kids, and two cats. Never miss a new release sign up HERE! Official website: www.kelleelgreene.com Facebook: www.facebook.com/kelleelgreene Twitter: www.twitter.com/kelleelgreene Amazon: https://www.amazon.com/Kellee-L.-Gree...", 'author_birth_date': None, 'author_death_date': None, 'author_website': 'http://www.amazon.com/Kellee-L.-Greene/e/B019HC5IRQ/ref=ntt_dp_epwbk_0', 'author_age': None, 'author_current_address': 'WI', 'author_candidate_address': [], 'book_url': 'https://www.goodreads.com/book/show/36324398-the-island', 'book_title': 'The Island', 'book_rating': 3.69}
+
+2026-05-06 04:29:10,296 DEBUG: Started executable: `C:\Leads automation\leads-automation\venv\Lib\site-packages\seleniumbase\drivers\uc_driver.exe` in a child process with pid: 10312 using 134217728 to output -1
+2026-05-06 04:29:11,011 DEBUG: Attempting to acquire lock 2075579247664 on downloaded_files/pyautogui.lock
+2026-05-06 04:29:11,015 DEBUG: Lock 2075579247664 acquired on downloaded_files/pyautogui.lock
+2026-05-06 04:29:11,031 DEBUG: Attempting to release lock 2075579247664 on downloaded_files/pyautogui.lock
+2026-05-06 04:29:11,033 DEBUG: Lock 2075579247664 released on downloaded_files/pyautogui.lock
+2026-05-06 04:29:20,813 INFO: Best item index: 0. Age: 37. Addreses: ['detroit, mi', 'southfield, mi', 'harper woods, mi'] Score: 0
+2026-05-06 04:29:20,974 INFO: Best item index: 1. Age: 61. Addreses: ['boston, ma', 'atlanta, ga', 'charlestown, ma', 'nashville, tn'] Score: 0
+2026-05-06 04:29:21,066 INFO: Best item index: 2. Age: 46. Addreses: ['hopkins, sc', 'columbia, sc'] Score: 0
+2026-05-06 04:29:21,180 INFO: Best item index: 3. Age: 60. Addreses: ['ellerbe, nc', 'troy, nc', 'norman, nc'] Score: 0
+2026-05-06 04:29:21,322 INFO: Best item index: 4. Age: 50. Addreses: ['north collins, ny', 'buffalo, ny', 'springville, ny', 'tonawanda, ny'] Score: 0
+2026-05-06 04:29:21,459 INFO: Best item index: 5. Age: 39. Addreses: ['orange, nj', 'bloomfield, nj', 'west orange, nj', 'south orange, nj'] Score: 0
+2026-05-06 04:29:21,559 INFO: Best item index: 6. Age: 37. Addreses: ['woodlyn, pa', 'wilmington, de'] Score: 50
+2026-05-06 04:29:21,706 INFO: Best item index: 7. Age: 63. Addreses: ['atlanta, ga', 'monroe, ga', 'sandy springs, ga', 'biloxi, ms'] Score: 50
+2026-05-06 04:29:21,838 INFO: Best item index: 8. Age: 46. Addreses: ['syracuse, ut', 'layton, ut', 'clearfield, ut', 'kaysville, ut'] Score: 50
+2026-05-06 04:29:21,964 INFO: Best item index: 9. Age: 47. Addreses: ['orlando, fl', 'houston, tx', 'cedar hill, tx', 'irving, tx'] Score: 50
+2026-05-06 04:29:35,762 INFO: Kellee L. Greene's information scraped
+{'id': 727, 'author': 'Lucas Accardo', 'about_author': None, 'author_birth_date': None, 'author_death_date': None, 'author_website': 'http://lucasaccardo.blogspot.com.ar/', 'author_age': None, 'author_current_address': None, 'author_candidate_address': None, 'book_url': 'https://www.goodreads.com/book/show/18002555-la-noche-del-apocalipsis', 'book_title': 'La noche del apocalipsis: Un comic de nunca acabar', 'book_rating': 2.77}
+
+2026-05-06 04:29:42,089 DEBUG: Started executable: `C:\Leads automation\leads-automation\venv\Lib\site-packages\seleniumbase\drivers\uc_driver.exe` in a child process with pid: 8364 using 134217728 to output -1
+2026-05-06 04:29:42,735 DEBUG: Attempting to acquire lock 2075578966608 on downloaded_files/pyautogui.lock
+2026-05-06 04:29:42,737 DEBUG: Lock 2075578966608 acquired on downloaded_files/pyautogui.lock
+2026-05-06 04:29:42,741 DEBUG: Attempting to release lock 2075578966608 on downloaded_files/pyautogui.lock
+2026-05-06 04:29:42,743 DEBUG: Lock 2075578966608 released on downloaded_files/pyautogui.lock
+2026-05-06 04:30:05,895 INFO: Lucas Accardo's information scraped
+{'id': 728, 'author': 'Charlotte Paul', 'about_author': None, 'author_birth_date': None, 'author_death_date': None, 'author_website': None, 'author_age': None, 'author_current_address': None, 'author_candidate_address': None, 'book_url': 'https://www.goodreads.com/book/show/18932998-phoenix-island', 'book_title': 'Phoenix Island', 'book_rating': 3.83}
+
+2026-05-06 04:30:12,231 DEBUG: Started executable: `C:\Leads automation\leads-automation\venv\Lib\site-packages\seleniumbase\drivers\uc_driver.exe` in a child process with pid: 9516 using 134217728 to output -1
+2026-05-06 04:30:12,881 DEBUG: Attempting to acquire lock 2075578967696 on downloaded_files/pyautogui.lock
+2026-05-06 04:30:12,882 DEBUG: Lock 2075578967696 acquired on downloaded_files/pyautogui.lock
+2026-05-06 04:30:12,886 DEBUG: Attempting to release lock 2075578967696 on downloaded_files/pyautogui.lock
+2026-05-06 04:30:12,887 DEBUG: Lock 2075578967696 released on downloaded_files/pyautogui.lock
+2026-05-06 04:30:35,983 INFO: Charlotte Paul's information scraped
+{'id': 730, 'author': 'John Connolly', 'about_author': "John Connolly was born in Dublin, Ireland in 1968 and has, at various points in his life, worked as a journalist, a barman, a local government official, a waiter and a dogsbody at Harrods department store in London. He studied English in Trinity College, Dublin and journalism at Dublin City University, subsequently spending five years working as a freelance journalist for The Irish Times newspaper, to which he continues to contribute. He is based in Dublin but divides his time between his native city and the United States. This page is administered by John's assistant, Clair, on John's behalf. If you'd like to communicate with John directly, you can do so by writing to contact-at-johnconnollybooks.com, or by following him on Twitter at @JConnollyBooks. Librarian Note: There is more than one author in the GoodReads database with this name. See other authors with similar names.", 'author_birth_date': None, 'author_death_date': None, 'author_website': 'http://www.johnconnollybooks.com/', 'author_age': None, 'author_current_address': 'Dublin', 'author_candidate_address': ['Dublin, OH', 'Dublin, CA', 'Dublin, GA', 'Dublin, TX', 'Dublin, NH', 'Dublin, VA', 'Dublin, PA', 'Dublin, NC', 'Dublin, IN'], 'book_url': 'https://www.goodreads.com/book/show/6411440-the-gates', 'book_title': 'The Gates', 'book_rating': 3.81}
+
+2026-05-06 04:30:42,341 DEBUG: Started executable: `C:\Leads automation\leads-automation\venv\Lib\site-packages\seleniumbase\drivers\uc_driver.exe` in a child process with pid: 5736 using 134217728 to output -1
+2026-05-06 04:30:42,991 DEBUG: Attempting to acquire lock 2075583269968 on downloaded_files/pyautogui.lock
+2026-05-06 04:30:42,993 DEBUG: Lock 2075583269968 acquired on downloaded_files/pyautogui.lock
+2026-05-06 04:30:42,997 DEBUG: Attempting to release lock 2075583269968 on downloaded_files/pyautogui.lock
+2026-05-06 04:30:42,999 DEBUG: Lock 2075583269968 released on downloaded_files/pyautogui.lock
+2026-05-06 04:30:50,617 INFO: Best item index: 0. Age: 52. Addreses: ['brooklyn, ny'] Score: 0
+2026-05-06 04:30:50,697 INFO: Best item index: 1. Age: 66. Addreses: ['baltimore, md'] Score: 0
+2026-05-06 04:30:50,832 INFO: Best item index: 2. Age: 39. Addreses: ['kensington, ca', 'san francisco, ca', 'pacific palisades, ca', 'santa rosa, ca'] Score: 0
+2026-05-06 04:30:50,969 INFO: Best item index: 3. Age: 79. Addreses: ['fernandina beach, fl', 'collierville, tn', 'bristow, va', 'east rockaway, ny'] Score: 0
+2026-05-06 04:30:51,102 INFO: Best item index: 4. Age: 92. Addreses: ['santa barbara, ca', 'sedona, az', 'goleta, ca', 'colorado springs, co'] Score: 0
+2026-05-06 04:30:51,330 INFO: Best item index: 5. Age: 82. Addreses: ['round rock, tx', 'houston, tx', 'austin, tx', 'montgomery, tx'] Score: 35
+2026-05-06 04:30:51,459 INFO: Best item index: 6. Age: 84. Addreses: ['bergenfield, nj', 'delray beach, fl', 'bronx, ny', 'easton, pa'] Score: 35
+2026-05-06 04:30:51,592 INFO: Best item index: 7. Age: 71. Addreses: ['auburn, wa', 'wildwood, nj', 'bothell, wa', 'san mateo, ca'] Score: 35
+2026-05-06 04:30:51,730 INFO: Best item index: 8. Age: 44. Addreses: ['missoula, mt', 'orlando, fl', 'asheville, nc', 'hendersonville, nc'] Score: 35
+2026-05-06 04:30:51,823 INFO: Best item index: 9. Age: 77. Addreses: ['cloquet, mn', 'carlton, mn'] Score: 35
+2026-05-06 04:31:06,144 INFO: John Connolly's information scraped
+Traceback (most recent call last):
+  File "C:\Leads automation\leads-automation\data_enricher\veripages.py", line 264, in main
+    print(f"{author}\n")
+    ~~~~~^^^^^^^^^^^^^^^
+  File "C:\Leads automation\leads-automation\venv\Lib\site-packages\colorama\ansitowin32.py", line 47, in write
+    self.__convertor.write(text)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Leads automation\leads-automation\venv\Lib\site-packages\colorama\ansitowin32.py", line 177, in write
+    self.write_and_convert(text)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Leads automation\leads-automation\venv\Lib\site-packages\colorama\ansitowin32.py", line 205, in write_and_convert
+    self.write_plain_text(text, cursor, len(text))
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Leads automation\leads-automation\venv\Lib\site-packages\colorama\ansitowin32.py", line 210, in write_plain_text
+    self.wrapped.write(text[start:end])
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\USER\AppData\Local\Programs\Python\Python314\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u0399' in position 161: character maps to <undefined>
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Leads automation\leads-automation\data_enricher\veripages.py", line 283, in <module>
+    main()
+    ~~~~^^
+  File "C:\Leads automation\leads-automation\data_enricher\veripages.py", line 276, in main
+    traceback.print_exc(e)
+    ~~~~~~~~~~~~~~~~~~~^^^
+  File "C:\Users\USER\AppData\Local\Programs\Python\Python314\Lib\traceback.py", line 210, in print_exc
+    print_exception(sys.exception(), limit=limit, file=file, chain=chain)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\USER\AppData\Local\Programs\Python\Python314\Lib\traceback.py", line 133, in print_exception
+    te = TracebackException(type(value), value, tb, limit=limit, compact=True)
+  File "C:\Users\USER\AppData\Local\Programs\Python\Python314\Lib\traceback.py", line 1059, in __init__
+    self.stack = StackSummary._extract_from_extended_frame_gen(
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        _walk_tb_with_full_positions(exc_traceback),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        limit=limit, lookup_lines=lookup_lines,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        capture_locals=capture_locals)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\USER\AppData\Local\Programs\Python\Python314\Lib\traceback.py", line 475, in _extract_from_extended_frame_gen
+    elif limit >= 0:
+         ^^^^^^^^^^
+TypeError: '>=' not supported between instances of 'UnicodeEncodeError' and 'int'
+2026-05-06 04:31:09,120 ERROR: Failed Veripages Enrichment
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Leads automation\leads-automation\master_pipeline\master_pipeline.py", line 37, in <module>
+    run_step(
+    ~~~~~~~~^
+        "Veripages Enrichment",
+        ^^^^^^^^^^^^^^^^^^^^^^^
+        "python -m data_enricher.veripages"
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Leads automation\leads-automation\master_pipeline\master_pipeline.py", line 18, in run_step
+    raise Exception(f"Pipeline stopped at {name}")
+Exception: Pipeline stopped at Veripages Enrichment
+Retrying... 
+2026-05-06 04:31:11,006 INFO: Daily pipeline started
+2026-05-06 04:31:11,007 INFO: Staring: Fill Age + Current Address
+2026-05-06 04:31:24,249 DEBUG: Converted retries value: 2 -> Retry(total=2, connect=None, read=None, redirect=None, status=None)
+2026-05-06 04:31:24,249 DEBUG: Converted retries value: 2 -> Retry(total=2, connect=None, read=None, redirect=None, status=None)
+2026-05-06 04:31:24,378 INFO: Minetar\u014d Mochizuki location and age filled.
+2026-05-06 04:31:24,625 INFO: R.E.  Palmer location and age filled.
+2026-05-06 04:31:24,749 INFO: Amanda Hocking location and age filled.
+2026-05-06 04:31:24,981 DEBUG: Nominatim.geocode: https://nominatim.openstreetmap.org/search?q=Iraq&format=json&countrycodes=us&addressdetails=1
+2026-05-06 04:31:24,984 DEBUG: Starting new HTTPS connection (1): nominatim.openstreetmap.org:443
+2026-05-06 04:31:25,902 DEBUG: https://nominatim.openstreetmap.org:443 "GET /search?q=Iraq&format=json&countrycodes=us&addressdetails=1 HTTP/1.1" 200 879
+2026-05-06 04:31:25,951 DEBUG: Nominatim.geocode: https://nominatim.openstreetmap.org/search?q=the+United+States&format=json&countrycodes=us&addressdetails=1
+2026-05-06 04:31:26,522 DEBUG: https://nominatim.openstreetmap.org:443 "GET /search?q=the+United+States&format=json&countrycodes=us&addressdetails=1 HTTP/1.1" 200 833
+2026-05-06 04:31:26,524 INFO: Steven Konkoly location and age filled.
+2026-05-06 04:31:26,598 INFO: James Howard Kunstler location and age filled.
+2026-05-06 04:31:26,647 INFO: Gary K. Wolfe location and age filled.
+2026-05-06 04:31:26,812 INFO: Carrie Ryan location and age filled.
+2026-05-06 04:31:26,958 INFO: Neil Clarke location and age filled.
+2026-05-06 04:31:27,061 INFO: Melissa Landers location and age filled.
+2026-05-06 04:31:27,144 INFO: Liz Jensen location and age filled.
+2026-05-06 04:31:28,473 INFO: Completed Fill Age + Current Address
+2026-05-06 04:31:28,474 INFO: Staring: Veripages Enrichment
+2026-05-06 04:31:37,821 DEBUG: Attempting to acquire lock 1900935672368 on downloaded_files/pyautogui.lock
+2026-05-06 04:31:37,823 DEBUG: Lock 1900935672368 acquired on downloaded_files/pyautogui.lock
+2026-05-06 04:31:37,834 DEBUG: Attempting to release lock 1900935672368 on downloaded_files/pyautogui.lock
+2026-05-06 04:31:37,842 DEBUG: Lock 1900935672368 released on downloaded_files/pyautogui.lock
+2026-05-06 04:31:37,843 DEBUG: Skipping Selenium Manager; path to chrome driver specified in Service class: C:\Leads automation\leads-automation\venv\Lib\site-packages\seleniumbase\drivers\uc_driver.exe
+2026-05-06 04:31:37,857 DEBUG: Started executable: `C:\Leads automation\leads-automation\venv\Lib\site-packages\seleniumbase\drivers\uc_driver.exe` in a child process with pid: 11328 using 134217728 to output -1
+2026-05-06 04:31:42,887 DEBUG: Started executable: `C:\Leads automation\leads-automation\venv\Lib\site-packages\seleniumbase\drivers\uc_driver.exe` in a child process with pid: 1448 using 134217728 to output -1
+{'id': 721, 'author': 'Christopher Nyerges', 'about_author': None, 'author_birth_date': None, 'author_death_date': None, 'author_website': None, 'author_age': None, 'author_current_address': None, 'author_candidate_address': None, 'book_url': 'https://www.goodreads.com/book/show/317533.How_to_Survive_Anywhere', 'book_title': 'How to Survive Anywhere', 'book_rating': 3.55}
+
+2026-05-06 04:31:50,171 DEBUG: Started executable: `C:\Leads automation\leads-automation\venv\Lib\site-packages\seleniumbase\drivers\uc_driver.exe` in a child process with pid: 11560 using 134217728 to output -1
+2026-05-06 04:31:50,959 DEBUG: Attempting to acquire lock 1900936341584 on downloaded_files/pyautogui.lock
+2026-05-06 04:31:50,961 DEBUG: Lock 1900936341584 acquired on downloaded_files/pyautogui.lock
+2026-05-06 04:31:50,966 DEBUG: Attempting to release lock 1900936341584 on downloaded_files/pyautogui.lock
+2026-05-06 04:31:50,967 DEBUG: Lock 1900936341584 released on downloaded_files/pyautogui.lock
+2026-05-06 04:32:19,698 INFO: Christopher Nyerges's information scraped
+{'id': 722, 'author': 'Guy A. Johnson', 'about_author': None, 'author_birth_date': None, 'author_death_date': None, 'author_website': None, 'author_age': None, 'author_current_address': None, 'author_candidate_address': None, 'book_url': 'https://www.goodreads.com/book/show/22706693-submersion', 'book_title': 'Submersion', 'book_rating': 3.93}
+
+2026-05-06 04:32:26,079 DEBUG: Started executable: `C:\Leads automation\leads-automation\venv\Lib\site-packages\seleniumbase\drivers\uc_driver.exe` in a child process with pid: 10000 using 134217728 to output -1
+2026-05-06 04:32:26,729 DEBUG: Attempting to acquire lock 1900936343504 on downloaded_files/pyautogui.lock
+2026-05-06 04:32:26,733 DEBUG: Lock 1900936343504 acquired on downloaded_files/pyautogui.lock
+2026-05-06 04:32:26,737 DEBUG: Attempting to release lock 1900936343504 on downloaded_files/pyautogui.lock
+2026-05-06 04:32:26,738 DEBUG: Lock 1900936343504 released on downloaded_files/pyautogui.lock
+2026-05-06 04:32:52,447 INFO: Guy A. Johnson's information scraped
+{'id': 723, 'author': 'John Twelve Hawks', 'about_author': 'John Twelve Hawks is the author of the New York Times bestseller The Traveler, the first book in a trilogy that includes The Dark River and The Golden City. The Fourth Realm Trilogy has been translated into twenty-five languages. Known as JTH by his readers, he followed the trilogy with Spark, a stand-alone novel, and Against Authority: Freedom and the Rise of the Surveillance States,. His new novel, Certainty, will be published on April 28, 2026. For more than twenty years, JTH has lived a deliberately “anonymous life” to show his resistance to the continual government and corporate attack on privacy. He has discussed his life choices in a published essay, “Writing as the Sky Rains Death.” JTH worked as a war correspondent and turned to fiction to understand a fractured reality. Like several of his characters, he has lived in New York City, Los Angeles, and rural Ireland. Hawk_', 'author_birth_date': None, 'author_death_date': None, 'author_website': 'http://www.johntwelvehawks.com', 'author_age': None, 'author_current_address': 'New York, NY', 'author_candidate_address': ['New York, NY'], 'book_url': 'https://www.goodreads.com/book/show/1262341.The_Dark_River', 'book_title': 'The Dark River', 'book_rating': 3.79}
+
+2026-05-06 04:32:59,009 DEBUG: Started executable: `C:\Leads automation\leads-automation\venv\Lib\site-packages\seleniumbase\drivers\uc_driver.exe` in a child process with pid: 9336 using 134217728 to output -1
+2026-05-06 04:32:59,908 DEBUG: Attempting to acquire lock 1900935789488 on downloaded_files/pyautogui.lock
+2026-05-06 04:32:59,942 DEBUG: Lock 1900935789488 acquired on downloaded_files/pyautogui.lock
+2026-05-06 04:32:59,973 DEBUG: Attempting to release lock 1900935789488 on downloaded_files/pyautogui.lock
+2026-05-06 04:32:59,976 DEBUG: Lock 1900935789488 released on downloaded_files/pyautogui.lock
+2026-05-06 04:33:18,347 INFO: Best item index: 0. Age: 54. Addreses: ['mansfield, tx', 'brownwood, tx', 'arlington, tx', 'garwood, tx'] Score: 0
+2026-05-06 04:33:20,708 INFO: Best item index: 1. Age: 69. Addreses: ['kernersville, nc', 'greensboro, nc', 'pleasant garden, nc', 'mount airy, nc'] Score: 0
+2026-05-06 04:33:21,070 INFO: Best item index: 2. Age: 56. Addreses: ['parsons, ks', 'lawrence, ks', 'montrose, co', 'olathe, co'] Score: 0
+2026-05-06 04:33:21,365 INFO: Best item index: 3. Age: 67. Addreses: ['conway, ar', 'ash flat, ar', 'moab, ut', 'greenbrier, ar'] Score: 0
+2026-05-06 04:33:21,761 INFO: Best item index: 4. Age: 89. Addreses: ['carmel, in', 'fishers, in', 'indianapolis, in', 'naples, fl'] Score: 0
+2026-05-06 04:33:22,246 INFO: Best item index: 5. Age: 68. Addreses: ['miami, fl', 'lake wales, fl', 'st petersburg, fl', 'saint petersburg, fl'] Score: 0
+2026-05-06 04:33:23,561 INFO: Best item index: 6. Age: 51. Addreses: ['king, nc', 'pilot mountain, nc', 'bend, or', 'portland, or'] Score: 0
+2026-05-06 04:33:49,269 INFO: Best item index: 7. Age: 64. Addreses: ['hernando, fl', 'ocala, fl', 'lecanto, fl', 'inverness, fl'] Score: 0
+2026-05-06 04:33:49,985 INFO: Best item index: 8. Age: 93. Addreses: ['mount airy, nc', 'raleigh, nc', 'rch cucamonga, ca'] Score: 0
+2026-05-06 04:33:50,234 INFO: Best item index: 9. Age: 74. Addreses: ['palm desert, ca', 'walnut creek, ca', 'centreville, va', 'lafayette, ca'] Score: 0
+2026-05-06 04:34:16,139 INFO: John Twelve Hawks's information scraped
+{'id': 724, 'author': 'S.M.  Wilson', 'about_author': None, 'author_birth_date': None, 'author_death_date': None, 'author_website': None, 'author_age': None, 'author_current_address': None, 'author_candidate_address': None, 'book_url': 'https://www.goodreads.com/book/show/37564139-the-extinction-trials', 'book_title': 'The Extinction Trials', 'book_rating': 3.88}
+
+2026-05-06 04:34:22,580 DEBUG: Started executable: `C:\Leads automation\leads-automation\venv\Lib\site-packages\seleniumbase\drivers\uc_driver.exe` in a child process with pid: 12032 using 134217728 to output -1
+2026-05-06 04:34:23,406 DEBUG: Attempting to acquire lock 1900935790096 on downloaded_files/pyautogui.lock
+2026-05-06 04:34:23,410 DEBUG: Lock 1900935790096 acquired on downloaded_files/pyautogui.lock
+2026-05-06 04:34:23,413 DEBUG: Attempting to release lock 1900935790096 on downloaded_files/pyautogui.lock
+2026-05-06 04:34:23,415 DEBUG: Lock 1900935790096 released on downloaded_files/pyautogui.lock
+2026-05-06 04:34:35,904 INFO: S.M.  Wilson's information scraped
+{'id': 725, 'author': 'Kellee L. Greene', 'about_author': "Kellee L. Greene is a stay-at-home mom to two super awesome and wonderfully sassy children. She loves to read, draw, and spend time with her family when she's not writing. Writing and having people read her books has been a long time dream of hers and she's excited to write more. Her favorite genres are Fantasy and Sci-fi. Kellee lives in Wisconsin with her husband, two kids, and two cats. Never miss a new release sign up HERE! Official website: www.kelleelgreene.com Facebook: www.facebook.com/kelleelgreene Twitter: www.twitter.com/kelleelgreene Amazon: https://www.amazon.com/Kellee-L.-Gree...", 'author_birth_date': None, 'author_death_date': None, 'author_website': 'http://www.amazon.com/Kellee-L.-Greene/e/B019HC5IRQ/ref=ntt_dp_epwbk_0', 'author_age': None, 'author_current_address': 'WI', 'author_candidate_address': [], 'book_url': 'https://www.goodreads.com/book/show/36324398-the-island', 'book_title': 'The Island', 'book_rating': 3.69}
+
+2026-05-06 04:34:42,515 DEBUG: Started executable: `C:\Leads automation\leads-automation\venv\Lib\site-packages\seleniumbase\drivers\uc_driver.exe` in a child process with pid: 10788 using 134217728 to output -1
+2026-05-06 04:34:43,258 DEBUG: Attempting to acquire lock 1900936506416 on downloaded_files/pyautogui.lock
+2026-05-06 04:34:43,261 DEBUG: Lock 1900936506416 acquired on downloaded_files/pyautogui.lock
+2026-05-06 04:34:43,266 DEBUG: Attempting to release lock 1900936506416 on downloaded_files/pyautogui.lock
+2026-05-06 04:34:43,268 DEBUG: Lock 1900936506416 released on downloaded_files/pyautogui.lock
+2026-05-06 04:34:54,554 INFO: Best item index: 0. Age: 37. Addreses: ['detroit, mi', 'southfield, mi', 'harper woods, mi'] Score: 0
+2026-05-06 04:34:55,468 INFO: Best item index: 1. Age: 61. Addreses: ['boston, ma', 'atlanta, ga', 'charlestown, ma', 'nashville, tn'] Score: 0
+2026-05-06 04:34:55,578 INFO: Best item index: 2. Age: 46. Addreses: ['hopkins, sc', 'columbia, sc'] Score: 0
+2026-05-06 04:34:55,715 INFO: Best item index: 3. Age: 60. Addreses: ['ellerbe, nc', 'troy, nc', 'norman, nc'] Score: 0
+2026-05-06 04:34:55,892 INFO: Best item index: 4. Age: 50. Addreses: ['north collins, ny', 'buffalo, ny', 'springville, ny', 'tonawanda, ny'] Score: 0
+2026-05-06 04:34:56,098 INFO: Best item index: 5. Age: 39. Addreses: ['orange, nj', 'bloomfield, nj', 'west orange, nj', 'south orange, nj'] Score: 0
+2026-05-06 04:34:56,229 INFO: Best item index: 6. Age: 37. Addreses: ['woodlyn, pa', 'wilmington, de'] Score: 50
+2026-05-06 04:34:56,384 INFO: Best item index: 7. Age: 63. Addreses: ['atlanta, ga', 'monroe, ga', 'sandy springs, ga', 'biloxi, ms'] Score: 50
+2026-05-06 04:34:56,565 INFO: Best item index: 8. Age: 46. Addreses: ['syracuse, ut', 'layton, ut', 'clearfield, ut', 'kaysville, ut'] Score: 50
+2026-05-06 04:34:56,731 INFO: Best item index: 9. Age: 47. Addreses: ['orlando, fl', 'houston, tx', 'cedar hill, tx', 'irving, tx'] Score: 50
+2026-05-06 04:35:13,199 INFO: Kellee L. Greene's information scraped
+{'id': 727, 'author': 'Lucas Accardo', 'about_author': None, 'author_birth_date': None, 'author_death_date': None, 'author_website': 'http://lucasaccardo.blogspot.com.ar/', 'author_age': None, 'author_current_address': None, 'author_candidate_address': None, 'book_url': 'https://www.goodreads.com/book/show/18002555-la-noche-del-apocalipsis', 'book_title': 'La noche del apocalipsis: Un comic de nunca acabar', 'book_rating': 2.77}
+
+2026-05-06 04:35:20,746 DEBUG: Started executable: `C:\Leads automation\leads-automation\venv\Lib\site-packages\seleniumbase\drivers\uc_driver.exe` in a child process with pid: 9856 using 134217728 to output -1
+2026-05-06 04:35:21,584 DEBUG: Attempting to acquire lock 1900936208976 on downloaded_files/pyautogui.lock
+2026-05-06 04:35:21,585 DEBUG: Lock 1900936208976 acquired on downloaded_files/pyautogui.lock
+2026-05-06 04:35:21,589 DEBUG: Attempting to release lock 1900936208976 on downloaded_files/pyautogui.lock
+2026-05-06 04:35:21,590 DEBUG: Lock 1900936208976 released on downloaded_files/pyautogui.lock
+2026-05-06 04:35:52,638 INFO: Lucas Accardo's information scraped
+{'id': 728, 'author': 'Charlotte Paul', 'about_author': None, 'author_birth_date': None, 'author_death_date': None, 'author_website': None, 'author_age': None, 'author_current_address': None, 'author_candidate_address': None, 'book_url': 'https://www.goodreads.com/book/show/18932998-phoenix-island', 'book_title': 'Phoenix Island', 'book_rating': 3.83}
+
+2026-05-06 04:35:59,028 DEBUG: Started executable: `C:\Leads automation\leads-automation\venv\Lib\site-packages\seleniumbase\drivers\uc_driver.exe` in a child process with pid: 11588 using 134217728 to output -1
+2026-05-06 04:35:59,696 DEBUG: Attempting to acquire lock 1900936210064 on downloaded_files/pyautogui.lock
+2026-05-06 04:35:59,698 DEBUG: Lock 1900936210064 acquired on downloaded_files/pyautogui.lock
+2026-05-06 04:35:59,703 DEBUG: Attempting to release lock 1900936210064 on downloaded_files/pyautogui.lock
+2026-05-06 04:35:59,704 DEBUG: Lock 1900936210064 released on downloaded_files/pyautogui.lock
+2026-05-06 04:36:21,976 INFO: Charlotte Paul's information scraped
+{'id': 730, 'author': 'John Connolly', 'about_author': "John Connolly was born in Dublin, Ireland in 1968 and has, at various points in his life, worked as a journalist, a barman, a local government official, a waiter and a dogsbody at Harrods department store in London. He studied English in Trinity College, Dublin and journalism at Dublin City University, subsequently spending five years working as a freelance journalist for The Irish Times newspaper, to which he continues to contribute. He is based in Dublin but divides his time between his native city and the United States. This page is administered by John's assistant, Clair, on John's behalf. If you'd like to communicate with John directly, you can do so by writing to contact-at-johnconnollybooks.com, or by following him on Twitter at @JConnollyBooks. Librarian Note: There is more than one author in the GoodReads database with this name. See other authors with similar names.", 'author_birth_date': None, 'author_death_date': None, 'author_website': 'http://www.johnconnollybooks.com/', 'author_age': None, 'author_current_address': 'Dublin', 'author_candidate_address': ['Dublin, OH', 'Dublin, CA', 'Dublin, GA', 'Dublin, TX', 'Dublin, NH', 'Dublin, VA', 'Dublin, PA', 'Dublin, NC', 'Dublin, IN'], 'book_url': 'https://www.goodreads.com/book/show/6411440-the-gates', 'book_title': 'The Gates', 'book_rating': 3.81}
+
+2026-05-06 04:36:28,390 DEBUG: Started executable: `C:\Leads automation\leads-automation\venv\Lib\site-packages\seleniumbase\drivers\uc_driver.exe` in a child process with pid: 10552 using 134217728 to output -1
+2026-05-06 04:36:29,066 DEBUG: Attempting to acquire lock 1900940511568 on downloaded_files/pyautogui.lock
+2026-05-06 04:36:29,068 DEBUG: Lock 1900940511568 acquired on downloaded_files/pyautogui.lock
+2026-05-06 04:36:29,073 DEBUG: Attempting to release lock 1900940511568 on downloaded_files/pyautogui.lock
+2026-05-06 04:36:29,074 DEBUG: Lock 1900940511568 released on downloaded_files/pyautogui.lock
+2026-05-06 04:36:40,807 INFO: Best item index: 0. Age: 52. Addreses: ['brooklyn, ny'] Score: 0
+2026-05-06 04:36:40,894 INFO: Best item index: 1. Age: 66. Addreses: ['baltimore, md'] Score: 0
+2026-05-06 04:36:41,050 INFO: Best item index: 2. Age: 39. Addreses: ['kensington, ca', 'san francisco, ca', 'pacific palisades, ca', 'santa rosa, ca'] Score: 0
+2026-05-06 04:36:41,211 INFO: Best item index: 3. Age: 79. Addreses: ['fernandina beach, fl', 'collierville, tn', 'bristow, va', 'east rockaway, ny'] Score: 0
+2026-05-06 04:36:41,378 INFO: Best item index: 4. Age: 92. Addreses: ['santa barbara, ca', 'sedona, az', 'goleta, ca', 'colorado springs, co'] Score: 0
+2026-05-06 04:36:41,532 INFO: Best item index: 5. Age: 82. Addreses: ['round rock, tx', 'houston, tx', 'austin, tx', 'montgomery, tx'] Score: 35
+2026-05-06 04:36:41,697 INFO: Best item index: 6. Age: 84. Addreses: ['bergenfield, nj', 'delray beach, fl', 'bronx, ny', 'easton, pa'] Score: 35
+2026-05-06 04:36:41,864 INFO: Best item index: 7. Age: 71. Addreses: ['auburn, wa', 'wildwood, nj', 'bothell, wa', 'san mateo, ca'] Score: 35
+2026-05-06 04:36:42,022 INFO: Best item index: 8. Age: 44. Addreses: ['missoula, mt', 'orlando, fl', 'asheville, nc', 'hendersonville, nc'] Score: 35
+2026-05-06 04:36:42,144 INFO: Best item index: 9. Age: 77. Addreses: ['cloquet, mn', 'carlton, mn'] Score: 35
+2026-05-06 04:36:56,834 INFO: John Connolly's information scraped
+Traceback (most recent call last):
+  File "C:\Leads automation\leads-automation\data_enricher\veripages.py", line 264, in main
+  File "C:\Leads automation\leads-automation\venv\Lib\site-packages\colorama\ansitowin32.py", line 47, in write
+    self.__convertor.write(text)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Leads automation\leads-automation\venv\Lib\site-packages\colorama\ansitowin32.py", line 177, in write
+    self.write_and_convert(text)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Leads automation\leads-automation\venv\Lib\site-packages\colorama\ansitowin32.py", line 205, in write_and_convert
+    self.write_plain_text(text, cursor, len(text))
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Leads automation\leads-automation\venv\Lib\site-packages\colorama\ansitowin32.py", line 210, in write_plain_text
+    self.wrapped.write(text[start:end])
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\USER\AppData\Local\Programs\Python\Python314\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u0399' in position 161: character maps to <undefined>
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Leads automation\leads-automation\data_enricher\veripages.py", line 283, in <module>
+    main()
+    ~~~~^^
+  File "C:\Leads automation\leads-automation\data_enricher\veripages.py", line 276, in main
+    traceback.print_exc(e)
+    ~~~~~~~~~~~~~~~~~~~^^^
+  File "C:\Users\USER\AppData\Local\Programs\Python\Python314\Lib\traceback.py", line 210, in print_exc
+    print_exception(sys.exception(), limit=limit, file=file, chain=chain)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\USER\AppData\Local\Programs\Python\Python314\Lib\traceback.py", line 133, in print_exception
+    te = TracebackException(type(value), value, tb, limit=limit, compact=True)
+  File "C:\Users\USER\AppData\Local\Programs\Python\Python314\Lib\traceback.py", line 1059, in __init__
+    self.stack = StackSummary._extract_from_extended_frame_gen(
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        _walk_tb_with_full_positions(exc_traceback),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        limit=limit, lookup_lines=lookup_lines,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        capture_locals=capture_locals)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\USER\AppData\Local\Programs\Python\Python314\Lib\traceback.py", line 475, in _extract_from_extended_frame_gen
+    elif limit >= 0:
+         ^^^^^^^^^^
+TypeError: '>=' not supported between instances of 'UnicodeEncodeError' and 'int'
+2026-05-06 04:36:59,488 ERROR: Failed Veripages Enrichment
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Leads automation\leads-automation\master_pipeline\master_pipeline.py", line 37, in <module>
+    run_step(
+    ~~~~~~~~^
+        "Veripages Enrichment",
+        ^^^^^^^^^^^^^^^^^^^^^^^
+        "python -m data_enricher.veripages"
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Leads automation\leads-automation\master_pipeline\master_pipeline.py", line 18, in run_step
+    raise Exception(f"Pipeline stopped at {name}")
+Exception: Pipeline stopped at Veripages Enrichment
+2026-05-06 05:06:20,693 INFO: Daily pipeline started
+2026-05-06 05:06:20,696 INFO: Staring: Fill Age + Current Address
+2026-05-06 05:07:22,557 DEBUG: Converted retries value: 2 -> Retry(total=2, connect=None, read=None, redirect=None, status=None)
+2026-05-06 05:07:22,558 DEBUG: Converted retries value: 2 -> Retry(total=2, connect=None, read=None, redirect=None, status=None)
+2026-05-06 05:07:23,075 DEBUG: Nominatim.geocode: https://nominatim.openstreetmap.org/search?q=gulf&format=json&countrycodes=us&addressdetails=1
+2026-05-06 05:07:23,080 DEBUG: Starting new HTTPS connection (1): nominatim.openstreetmap.org:443
+2026-05-06 05:07:23,600 DEBUG: https://nominatim.openstreetmap.org:443 "GET /search?q=gulf&format=json&countrycodes=us&addressdetails=1 HTTP/1.1" 200 518
+2026-05-06 05:07:23,622 INFO: Rashad Freeman location and age filled.
+2026-05-06 05:07:23,653 INFO: Nova location and age filled.
+2026-05-06 05:07:24,311 INFO: Alejandro Dolina location and age filled.
+2026-05-06 05:07:24,556 INFO: Ian Edginton location and age filled.
+2026-05-06 05:07:24,643 INFO: Thomas Emson location and age filled.
+2026-05-06 05:07:24,701 INFO: Crawford Kilian location and age filled.
+2026-05-06 05:07:24,826 INFO: Joss Whedon location and age filled.
+2026-05-06 05:07:25,279 DEBUG: Nominatim.geocode: https://nominatim.openstreetmap.org/search?q=Monument&format=json&countrycodes=us&addressdetails=1
+2026-05-06 05:07:26,178 DEBUG: https://nominatim.openstreetmap.org:443 "GET /search?q=Monument&format=json&countrycodes=us&addressdetails=1 HTTP/1.1" 200 981
+2026-05-06 05:07:26,181 INFO: Kevin J. Anderson location and age filled.
+2026-05-06 05:07:26,411 DEBUG: Nominatim.geocode: https://nominatim.openstreetmap.org/search?q=UK&format=json&countrycodes=us&addressdetails=1
+2026-05-06 05:07:27,098 DEBUG: https://nominatim.openstreetmap.org:443 "GET /search?q=UK&format=json&countrycodes=us&addressdetails=1 HTTP/1.1" 200 483
+2026-05-06 05:07:27,118 INFO: Tim Lebbon location and age filled.
+2026-05-06 05:07:27,181 INFO: R.W. Day location and age filled.
+2026-05-06 05:07:29,073 INFO: Completed Fill Age + Current Address
+2026-05-06 05:07:29,074 INFO: Staring: Veripages Enrichment
+2026-05-06 05:07:42,613 DEBUG: Attempting to acquire lock 1460672754224 on downloaded_files/pyautogui.lock
+2026-05-06 05:07:42,617 DEBUG: Lock 1460672754224 acquired on downloaded_files/pyautogui.lock
+2026-05-06 05:07:42,645 DEBUG: Attempting to release lock 1460672754224 on downloaded_files/pyautogui.lock
+2026-05-06 05:07:42,649 DEBUG: Lock 1460672754224 released on downloaded_files/pyautogui.lock
+2026-05-06 05:07:42,650 DEBUG: Skipping Selenium Manager; path to chrome driver specified in Service class: C:\Leads automation\leads-automation\venv\Lib\site-packages\seleniumbase\drivers\uc_driver.exe
+2026-05-06 05:07:42,670 DEBUG: Started executable: `C:\Leads automation\leads-automation\venv\Lib\site-packages\seleniumbase\drivers\uc_driver.exe` in a child process with pid: 1188 using 134217728 to output -1
+2026-05-06 05:07:48,286 DEBUG: Started executable: `C:\Leads automation\leads-automation\venv\Lib\site-packages\seleniumbase\drivers\uc_driver.exe` in a child process with pid: 6348 using 134217728 to output -1
+2026-05-06 05:07:56,098 DEBUG: Started executable: `C:\Leads automation\leads-automation\venv\Lib\site-packages\seleniumbase\drivers\uc_driver.exe` in a child process with pid: 6824 using 134217728 to output -1
+2026-05-06 05:07:57,296 DEBUG: Attempting to acquire lock 1460673423440 on downloaded_files/pyautogui.lock
+2026-05-06 05:07:57,299 DEBUG: Lock 1460673423440 acquired on downloaded_files/pyautogui.lock
+2026-05-06 05:07:57,306 DEBUG: Attempting to release lock 1460673423440 on downloaded_files/pyautogui.lock
+2026-05-06 05:07:57,308 DEBUG: Lock 1460673423440 released on downloaded_files/pyautogui.lock
+2026-05-06 05:08:21,329 INFO: Christopher Nyerges's information scraped
+2026-05-06 05:08:28,211 DEBUG: Started executable: `C:\Leads automation\leads-automation\venv\Lib\site-packages\seleniumbase\drivers\uc_driver.exe` in a child process with pid: 1112 using 134217728 to output -1
+2026-05-06 05:08:28,929 DEBUG: Attempting to acquire lock 1460673425360 on downloaded_files/pyautogui.lock
+2026-05-06 05:08:28,932 DEBUG: Lock 1460673425360 acquired on downloaded_files/pyautogui.lock
+2026-05-06 05:08:28,938 DEBUG: Attempting to release lock 1460673425360 on downloaded_files/pyautogui.lock
+2026-05-06 05:08:28,939 DEBUG: Lock 1460673425360 released on downloaded_files/pyautogui.lock
+2026-05-06 05:08:51,560 INFO: Guy A. Johnson's information scraped
+2026-05-06 05:08:58,116 DEBUG: Started executable: `C:\Leads automation\leads-automation\venv\Lib\site-packages\seleniumbase\drivers\uc_driver.exe` in a child process with pid: 7048 using 134217728 to output -1
+2026-05-06 05:08:58,794 DEBUG: Attempting to acquire lock 1460672887424 on downloaded_files/pyautogui.lock
+2026-05-06 05:08:58,796 DEBUG: Lock 1460672887424 acquired on downloaded_files/pyautogui.lock
+2026-05-06 05:08:58,801 DEBUG: Attempting to release lock 1460672887424 on downloaded_files/pyautogui.lock
+2026-05-06 05:08:58,802 DEBUG: Lock 1460672887424 released on downloaded_files/pyautogui.lock
+2026-05-06 05:09:09,374 INFO: Best item index: 0. Age: 54. Addreses: ['mansfield, tx', 'brownwood, tx', 'arlington, tx', 'garwood, tx'] Score: 0
+2026-05-06 05:09:09,550 INFO: Best item index: 1. Age: 69. Addreses: ['kernersville, nc', 'greensboro, nc', 'pleasant garden, nc', 'mount airy, nc'] Score: 0
+2026-05-06 05:09:09,726 INFO: Best item index: 2. Age: 56. Addreses: ['parsons, ks', 'lawrence, ks', 'montrose, co', 'olathe, co'] Score: 0
+2026-05-06 05:09:09,894 INFO: Best item index: 3. Age: 67. Addreses: ['conway, ar', 'ash flat, ar', 'moab, ut', 'greenbrier, ar'] Score: 0
+2026-05-06 05:09:10,072 INFO: Best item index: 4. Age: 89. Addreses: ['carmel, in', 'fishers, in', 'indianapolis, in', 'naples, fl'] Score: 0
+2026-05-06 05:09:10,259 INFO: Best item index: 5. Age: 68. Addreses: ['miami, fl', 'lake wales, fl', 'st petersburg, fl', 'saint petersburg, fl'] Score: 0
+2026-05-06 05:09:10,427 INFO: Best item index: 6. Age: 51. Addreses: ['king, nc', 'pilot mountain, nc', 'bend, or', 'portland, or'] Score: 0
+2026-05-06 05:09:10,603 INFO: Best item index: 7. Age: 64. Addreses: ['hernando, fl', 'ocala, fl', 'lecanto, fl', 'inverness, fl'] Score: 0
+2026-05-06 05:09:10,822 INFO: Best item index: 8. Age: 93. Addreses: ['mount airy, nc', 'raleigh, nc', 'rch cucamonga, ca'] Score: 0
+2026-05-06 05:09:10,997 INFO: Best item index: 9. Age: 74. Addreses: ['palm desert, ca', 'walnut creek, ca', 'centreville, va', 'lafayette, ca'] Score: 0
+2026-05-06 05:09:24,873 INFO: John Twelve Hawks's information scraped
+2026-05-06 05:09:36,528 DEBUG: Started executable: `C:\Leads automation\leads-automation\venv\Lib\site-packages\seleniumbase\drivers\uc_driver.exe` in a child process with pid: 7620 using 134217728 to output -1
+2026-05-06 05:09:37,480 DEBUG: Attempting to acquire lock 1460672888032 on downloaded_files/pyautogui.lock
+2026-05-06 05:09:37,483 DEBUG: Lock 1460672888032 acquired on downloaded_files/pyautogui.lock
+2026-05-06 05:09:37,489 DEBUG: Attempting to release lock 1460672888032 on downloaded_files/pyautogui.lock
+2026-05-06 05:09:37,491 DEBUG: Lock 1460672888032 released on downloaded_files/pyautogui.lock
+2026-05-06 05:09:51,154 INFO: S.M.  Wilson's information scraped
+2026-05-06 05:09:58,140 DEBUG: Started executable: `C:\Leads automation\leads-automation\venv\Lib\site-packages\seleniumbase\drivers\uc_driver.exe` in a child process with pid: 7720 using 134217728 to output -1
+2026-05-06 05:09:59,184 DEBUG: Attempting to acquire lock 1460672329584 on downloaded_files/pyautogui.lock
+2026-05-06 05:09:59,188 DEBUG: Lock 1460672329584 acquired on downloaded_files/pyautogui.lock
+2026-05-06 05:09:59,198 DEBUG: Attempting to release lock 1460672329584 on downloaded_files/pyautogui.lock
+2026-05-06 05:09:59,204 DEBUG: Lock 1460672329584 released on downloaded_files/pyautogui.lock
+2026-05-06 05:10:11,967 INFO: Best item index: 0. Age: 37. Addreses: ['detroit, mi', 'southfield, mi', 'harper woods, mi'] Score: 0
+2026-05-06 05:10:12,206 INFO: Best item index: 1. Age: 61. Addreses: ['boston, ma', 'atlanta, ga', 'charlestown, ma', 'nashville, tn'] Score: 0
+2026-05-06 05:10:12,391 INFO: Best item index: 2. Age: 46. Addreses: ['hopkins, sc', 'columbia, sc'] Score: 0
+2026-05-06 05:10:12,740 INFO: Best item index: 3. Age: 60. Addreses: ['ellerbe, nc', 'troy, nc', 'norman, nc'] Score: 0
+2026-05-06 05:10:12,986 INFO: Best item index: 4. Age: 50. Addreses: ['north collins, ny', 'buffalo, ny', 'springville, ny', 'tonawanda, ny'] Score: 0
+2026-05-06 05:10:13,204 INFO: Best item index: 5. Age: 39. Addreses: ['orange, nj', 'bloomfield, nj', 'west orange, nj', 'south orange, nj'] Score: 0
+2026-05-06 05:10:13,369 INFO: Best item index: 6. Age: 37. Addreses: ['woodlyn, pa', 'wilmington, de'] Score: 50
+2026-05-06 05:10:13,654 INFO: Best item index: 7. Age: 63. Addreses: ['atlanta, ga', 'monroe, ga', 'sandy springs, ga', 'biloxi, ms'] Score: 50
+2026-05-06 05:10:14,073 INFO: Best item index: 8. Age: 46. Addreses: ['syracuse, ut', 'layton, ut', 'clearfield, ut', 'kaysville, ut'] Score: 50
+2026-05-06 05:10:14,323 INFO: Best item index: 9. Age: 47. Addreses: ['orlando, fl', 'houston, tx', 'cedar hill, tx', 'irving, tx'] Score: 50
+2026-05-06 05:10:36,543 INFO: Kellee L. Greene's information scraped
+2026-05-06 05:10:51,267 DEBUG: Started executable: `C:\Leads automation\leads-automation\venv\Lib\site-packages\seleniumbase\drivers\uc_driver.exe` in a child process with pid: 9128 using 134217728 to output -1
+2026-05-06 05:11:02,757 DEBUG: Attempting to acquire lock 1460671937760 on downloaded_files/pyautogui.lock
+2026-05-06 05:11:02,760 DEBUG: Lock 1460671937760 acquired on downloaded_files/pyautogui.lock
+2026-05-06 05:11:02,772 DEBUG: Attempting to release lock 1460671937760 on downloaded_files/pyautogui.lock
+2026-05-06 05:11:02,774 DEBUG: Lock 1460671937760 released on downloaded_files/pyautogui.lock
+2026-05-06 05:12:50,906 INFO: Lucas Accardo's information scraped
+2026-05-06 05:12:58,797 DEBUG: Started executable: `C:\Leads automation\leads-automation\venv\Lib\site-packages\seleniumbase\drivers\uc_driver.exe` in a child process with pid: 1016 using 134217728 to output -1
+2026-05-06 05:12:59,828 DEBUG: Attempting to acquire lock 1460673306672 on downloaded_files/pyautogui.lock
+2026-05-06 05:12:59,837 DEBUG: Lock 1460673306672 acquired on downloaded_files/pyautogui.lock
+2026-05-06 05:12:59,845 DEBUG: Attempting to release lock 1460673306672 on downloaded_files/pyautogui.lock
+2026-05-06 05:12:59,847 DEBUG: Lock 1460673306672 released on downloaded_files/pyautogui.lock
+2026-05-06 05:13:31,657 INFO: Charlotte Paul's information scraped
+2026-05-06 05:13:39,488 DEBUG: Started executable: `C:\Leads automation\leads-automation\venv\Lib\site-packages\seleniumbase\drivers\uc_driver.exe` in a child process with pid: 8960 using 134217728 to output -1
+2026-05-06 05:13:40,211 DEBUG: Attempting to acquire lock 1460672672592 on downloaded_files/pyautogui.lock
+2026-05-06 05:13:40,214 DEBUG: Lock 1460672672592 acquired on downloaded_files/pyautogui.lock
+2026-05-06 05:13:40,220 DEBUG: Attempting to release lock 1460672672592 on downloaded_files/pyautogui.lock
+2026-05-06 05:13:40,222 DEBUG: Lock 1460672672592 released on downloaded_files/pyautogui.lock
+2026-05-06 05:13:50,750 INFO: Best item index: 0. Age: 52. Addreses: ['brooklyn, ny'] Score: 0
+2026-05-06 05:13:50,865 INFO: Best item index: 1. Age: 66. Addreses: ['baltimore, md'] Score: 0
+2026-05-06 05:13:51,055 INFO: Best item index: 2. Age: 39. Addreses: ['kensington, ca', 'san francisco, ca', 'pacific palisades, ca', 'santa rosa, ca'] Score: 0
+2026-05-06 05:13:51,254 INFO: Best item index: 3. Age: 79. Addreses: ['fernandina beach, fl', 'collierville, tn', 'bristow, va', 'east rockaway, ny'] Score: 0
+2026-05-06 05:13:51,451 INFO: Best item index: 4. Age: 92. Addreses: ['santa barbara, ca', 'sedona, az', 'goleta, ca', 'colorado springs, co'] Score: 0
+2026-05-06 05:13:51,655 INFO: Best item index: 5. Age: 82. Addreses: ['round rock, tx', 'houston, tx', 'austin, tx', 'montgomery, tx'] Score: 35
+2026-05-06 05:13:51,861 INFO: Best item index: 6. Age: 84. Addreses: ['bergenfield, nj', 'delray beach, fl', 'bronx, ny', 'easton, pa'] Score: 35
+2026-05-06 05:13:52,052 INFO: Best item index: 7. Age: 71. Addreses: ['auburn, wa', 'wildwood, nj', 'bothell, wa', 'san mateo, ca'] Score: 35
+2026-05-06 05:13:52,242 INFO: Best item index: 8. Age: 44. Addreses: ['missoula, mt', 'orlando, fl', 'asheville, nc', 'hendersonville, nc'] Score: 35
+2026-05-06 05:13:52,387 INFO: Best item index: 9. Age: 77. Addreses: ['cloquet, mn', 'carlton, mn'] Score: 35
+2026-05-06 05:14:07,249 INFO: John Connolly's information scraped
+2026-05-06 05:14:13,923 DEBUG: Started executable: `C:\Leads automation\leads-automation\venv\Lib\site-packages\seleniumbase\drivers\uc_driver.exe` in a child process with pid: 7972 using 134217728 to output -1
+2026-05-06 05:14:14,760 DEBUG: Attempting to acquire lock 1460672674128 on downloaded_files/pyautogui.lock
+2026-05-06 05:14:14,763 DEBUG: Lock 1460672674128 acquired on downloaded_files/pyautogui.lock
+2026-05-06 05:14:14,771 DEBUG: Attempting to release lock 1460672674128 on downloaded_files/pyautogui.lock
+2026-05-06 05:14:14,773 DEBUG: Lock 1460672674128 released on downloaded_files/pyautogui.lock
+2026-05-06 05:14:32,162 INFO: Best item index: 0. Age: 59. Addreses: ['surprise, az', 'el mirage, az', 'phoenix, az', 'peoria, az'] Score: 0
+2026-05-06 05:14:47,971 INFO: Michelle Muckley's information scraped
+2026-05-06 05:14:54,490 DEBUG: Started executable: `C:\Leads automation\leads-automation\venv\Lib\site-packages\seleniumbase\drivers\uc_driver.exe` in a child process with pid: 6332 using 134217728 to output -1
+2026-05-06 05:14:55,250 DEBUG: Attempting to acquire lock 1460672869824 on downloaded_files/pyautogui.lock
+2026-05-06 05:14:55,254 DEBUG: Lock 1460672869824 acquired on downloaded_files/pyautogui.lock
+2026-05-06 05:14:55,261 DEBUG: Attempting to release lock 1460672869824 on downloaded_files/pyautogui.lock
+2026-05-06 05:14:55,262 DEBUG: Lock 1460672869824 released on downloaded_files/pyautogui.lock
+2026-05-06 05:15:18,537 INFO: Craig Buckhout's information scraped
+{'Christopher Nyerges': {'address': 'PO Box 41834, Los Angeles, CA 90041', 'contact_num': '323-255-9502', 'email': None}, 'Guy A. Johnson': {'address': 'Morgans Point, TX', 'contact_num': '541-815-1600', 'email': None}, 'John Twelve Hawks': {'address': 'Midlothian, TX', 'contact_num': '719-963-6198', 'email': None}, 'S.M.  Wilson': None, 'Kellee L. Greene': {'address': '1850 Plymouth Dr, Woodlyn, PA 19094', 'contact_num': '484-557-7979', 'email': None}, 'Lucas Accardo': {'address': 'PO Box 174, Goodland, FL 34140', 'contact_num': '845-986-6504', 'email': None}, 'Charlotte Paul': {'address': '304 W Glendale Ave, Appleton, WI 54911', 'contact_num': '920-364-9417', 'email': None}, 'John Connolly': {'address': '3112 Luminoso Ln E, Round Rock, TX 78681', 'contact_num': '713-827-8889', 'email': None}, 'Michelle Muckley': {'address': '24067 N 165Th Ave, Surprise, AZ 85387', 'contact_num': '623-572-8957', 'email': None}, 'Craig Buckhout': {'address': '521 Lay Blvd, Kalamazoo, MI 49001', 'contact_num': '269-276-9136', 'email': None}}
+2026-05-06 05:15:21,187 INFO: Completed Veripages Enrichment
+2026-05-06 05:15:21,189 INFO: Staring: Export to Excel
+2026-05-06 05:15:30,970 INFO: Fetched 10 authors
+2026-05-06 05:15:34,165 INFO: 0 already exists in the company db. Successfully exported 10 authors
+2026-05-06 05:15:35,602 INFO: Completed Export to Excel
+2026-05-06 05:15:35,602 INFO: Pipeline completed successully
+2026-05-06 21:13:09,319 INFO: Daily pipeline started
+2026-05-06 21:13:09,320 INFO: Staring: Fill Age + Current Address
+2026-05-06 21:13:28,918 DEBUG: Converted retries value: 2 -> Retry(total=2, connect=None, read=None, redirect=None, status=None)
+2026-05-06 21:13:28,919 DEBUG: Converted retries value: 2 -> Retry(total=2, connect=None, read=None, redirect=None, status=None)
+2026-05-06 21:13:33,752 INFO: John Barnes location and age filled.
+2026-05-06 21:13:33,839 DEBUG: Nominatim.geocode: https://nominatim.openstreetmap.org/search?q=London&format=json&countrycodes=us&addressdetails=1
+2026-05-06 21:13:33,841 DEBUG: Starting new HTTPS connection (1): nominatim.openstreetmap.org:443
+2026-05-06 21:13:35,411 DEBUG: Incremented Retry for (url='/search?q=London&format=json&countrycodes=us&addressdetails=1'): Retry(total=1, connect=None, read=None, redirect=None, status=None)
+2026-05-06 21:13:35,412 WARNING: Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ReadTimeoutError("HTTPSConnectionPool(host='nominatim.openstreetmap.org', port=443): Read timed out. (read timeout=1)")': /search?q=London&format=json&countrycodes=us&addressdetails=1
+2026-05-06 21:13:35,412 DEBUG: Starting new HTTPS connection (2): nominatim.openstreetmap.org:443
+2026-05-06 21:13:35,711 DEBUG: https://nominatim.openstreetmap.org:443 "GET /search?q=London&format=json&countrycodes=us&addressdetails=1 HTTP/1.1" 200 1427
+2026-05-06 21:13:35,724 INFO: Glen Duncan location and age filled.
+2026-05-06 21:13:35,724 INFO: J.D.    Riley location and age filled.
+2026-05-06 21:13:35,725 INFO: R.P. Ruggiero location and age filled.
+2026-05-06 21:13:35,770 DEBUG: Nominatim.geocode: https://nominatim.openstreetmap.org/search?q=Wild&format=json&countrycodes=us&addressdetails=1
+2026-05-06 21:13:36,438 DEBUG: https://nominatim.openstreetmap.org:443 "GET /search?q=Wild&format=json&countrycodes=us&addressdetails=1 HTTP/1.1" 200 1711
+2026-05-06 21:13:36,440 INFO: Kari Gregg location and age filled.
+2026-05-06 21:13:36,440 INFO: Thomas Brookside location and age filled.
+2026-05-06 21:13:36,440 INFO: Deborah Barndt location and age filled.
+2026-05-06 21:13:36,481 INFO: Rob Verchick location and age filled.
+2026-05-06 21:13:36,568 INFO: Stephen Wallenfels location and age filled.
+2026-05-06 21:13:36,578 INFO: S.D. Stewart location and age filled.
+2026-05-06 21:13:38,102 INFO: Completed Fill Age + Current Address
+2026-05-06 21:13:38,102 INFO: Staring: Veripages Enrichment
+2026-05-06 21:13:47,540 DEBUG: Attempting to acquire lock 2502014759472 on downloaded_files/pyautogui.lock
+2026-05-06 21:13:47,542 DEBUG: Lock 2502014759472 acquired on downloaded_files/pyautogui.lock
+2026-05-06 21:13:47,566 DEBUG: Attempting to release lock 2502014759472 on downloaded_files/pyautogui.lock
+2026-05-06 21:13:47,577 DEBUG: Lock 2502014759472 released on downloaded_files/pyautogui.lock
+2026-05-06 21:13:47,578 DEBUG: Skipping Selenium Manager; path to chrome driver specified in Service class: C:\Leads automation\leads-automation\venv\Lib\site-packages\seleniumbase\drivers\uc_driver.exe
+2026-05-06 21:13:47,649 DEBUG: Started executable: `C:\Leads automation\leads-automation\venv\Lib\site-packages\seleniumbase\drivers\uc_driver.exe` in a child process with pid: 1640 using 134217728 to output -1
+2026-05-06 21:13:51,534 DEBUG: Started executable: `C:\Leads automation\leads-automation\venv\Lib\site-packages\seleniumbase\drivers\uc_driver.exe` in a child process with pid: 1336 using 134217728 to output -1
+2026-05-06 21:13:58,431 DEBUG: Started executable: `C:\Leads automation\leads-automation\venv\Lib\site-packages\seleniumbase\drivers\uc_driver.exe` in a child process with pid: 8576 using 134217728 to output -1
+2026-05-06 21:13:59,092 DEBUG: Attempting to acquire lock 2502015428688 on downloaded_files/pyautogui.lock
+2026-05-06 21:13:59,094 DEBUG: Lock 2502015428688 acquired on downloaded_files/pyautogui.lock
+2026-05-06 21:13:59,097 DEBUG: Attempting to release lock 2502015428688 on downloaded_files/pyautogui.lock
+2026-05-06 21:13:59,098 DEBUG: Lock 2502015428688 released on downloaded_files/pyautogui.lock
+2026-05-06 21:14:30,830 INFO: Elana Gomel's information scraped
+2026-05-06 21:14:37,165 DEBUG: Started executable: `C:\Leads automation\leads-automation\venv\Lib\site-packages\seleniumbase\drivers\uc_driver.exe` in a child process with pid: 5728 using 134217728 to output -1
+2026-05-06 21:14:37,770 DEBUG: Attempting to acquire lock 2502015430608 on downloaded_files/pyautogui.lock
+2026-05-06 21:14:37,772 DEBUG: Lock 2502015430608 acquired on downloaded_files/pyautogui.lock
+2026-05-06 21:14:37,774 DEBUG: Attempting to release lock 2502015430608 on downloaded_files/pyautogui.lock
+2026-05-06 21:14:37,775 DEBUG: Lock 2502015430608 released on downloaded_files/pyautogui.lock
+2026-05-06 21:14:47,322 INFO: Best item index: 0. Age: 69. Addreses: ['san francisco, ca', 'bolinas, ca', 'silver spring, md', 'takoma park, md'] Score: 110
+2026-05-06 21:14:47,385 INFO: Best item index: 1. Age: None. Addreses: ['minneapolis, mn', 'st louis park, mn'] Score: 110
+2026-05-06 21:15:03,374 INFO: Mark Hertsgaard's information scraped
+2026-05-06 21:15:09,690 DEBUG: Started executable: `C:\Leads automation\leads-automation\venv\Lib\site-packages\seleniumbase\drivers\uc_driver.exe` in a child process with pid: 8380 using 134217728 to output -1
+2026-05-06 21:15:10,330 DEBUG: Attempting to acquire lock 2502014876288 on downloaded_files/pyautogui.lock
+2026-05-06 21:15:10,332 DEBUG: Lock 2502014876288 acquired on downloaded_files/pyautogui.lock
+2026-05-06 21:15:10,334 DEBUG: Attempting to release lock 2502014876288 on downloaded_files/pyautogui.lock
+2026-05-06 21:15:10,335 DEBUG: Lock 2502014876288 released on downloaded_files/pyautogui.lock
+Invalid name: Martín Lígori
+2026-05-06 21:15:18,275 INFO: Martín Lígori's information scraped
+2026-05-06 21:15:24,539 DEBUG: Started executable: `C:\Leads automation\leads-automation\venv\Lib\site-packages\seleniumbase\drivers\uc_driver.exe` in a child process with pid: 4508 using 134217728 to output -1
+2026-05-06 21:15:25,160 DEBUG: Attempting to acquire lock 2502014874464 on downloaded_files/pyautogui.lock
+2026-05-06 21:15:25,161 DEBUG: Lock 2502014874464 acquired on downloaded_files/pyautogui.lock
+2026-05-06 21:15:25,163 DEBUG: Attempting to release lock 2502014874464 on downloaded_files/pyautogui.lock
+2026-05-06 21:15:25,164 DEBUG: Lock 2502014874464 released on downloaded_files/pyautogui.lock
+2026-05-06 21:15:49,430 INFO: Ricardo Ferrari's information scraped
+2026-05-06 21:15:55,679 DEBUG: Started executable: `C:\Leads automation\leads-automation\venv\Lib\site-packages\seleniumbase\drivers\uc_driver.exe` in a child process with pid: 4160 using 134217728 to output -1
+2026-05-06 21:15:56,398 DEBUG: Attempting to acquire lock 2502015576560 on downloaded_files/pyautogui.lock
+2026-05-06 21:15:56,400 DEBUG: Lock 2502015576560 acquired on downloaded_files/pyautogui.lock
+2026-05-06 21:15:56,402 DEBUG: Attempting to release lock 2502015576560 on downloaded_files/pyautogui.lock
+2026-05-06 21:15:56,403 DEBUG: Lock 2502015576560 released on downloaded_files/pyautogui.lock
+2026-05-06 21:16:04,269 INFO: Jeph Loeb's information scraped
+2026-05-06 21:16:10,509 DEBUG: Started executable: `C:\Leads automation\leads-automation\venv\Lib\site-packages\seleniumbase\drivers\uc_driver.exe` in a child process with pid: 8356 using 134217728 to output -1
+2026-05-06 21:16:11,159 DEBUG: Attempting to acquire lock 2502015297984 on downloaded_files/pyautogui.lock
+2026-05-06 21:16:11,161 DEBUG: Lock 2502015297984 acquired on downloaded_files/pyautogui.lock
+2026-05-06 21:16:11,163 DEBUG: Attempting to release lock 2502015297984 on downloaded_files/pyautogui.lock
+2026-05-06 21:16:11,164 DEBUG: Lock 2502015297984 released on downloaded_files/pyautogui.lock
+2026-05-06 21:16:20,151 INFO: Best item index: 0. Age: 56. Addreses: ['wichita falls, tx', 'seymour, tx'] Score: 0
+2026-05-06 21:16:20,236 INFO: Best item index: 1. Age: 42. Addreses: ['chula vista, ca', 'san diego, ca', 'el cajon, ca', 'pomona, ca'] Score: 0
+2026-05-06 21:16:20,279 INFO: Best item index: 2. Age: None. Addreses: ['pomona, ca'] Score: 0
+2026-05-06 21:16:33,455 INFO: Salvador Sanz's information scraped
+2026-05-06 21:16:39,693 DEBUG: Started executable: `C:\Leads automation\leads-automation\venv\Lib\site-packages\seleniumbase\drivers\uc_driver.exe` in a child process with pid: 2284 using 134217728 to output -1
+2026-05-06 21:16:40,311 DEBUG: Attempting to acquire lock 2502015297440 on downloaded_files/pyautogui.lock
+2026-05-06 21:16:40,312 DEBUG: Lock 2502015297440 acquired on downloaded_files/pyautogui.lock
+2026-05-06 21:16:40,314 DEBUG: Attempting to release lock 2502015297440 on downloaded_files/pyautogui.lock
+2026-05-06 21:16:40,315 DEBUG: Lock 2502015297440 released on downloaded_files/pyautogui.lock
+2026-05-06 21:16:49,379 INFO: Best item index: 0. Age: 52. Addreses: ['greensboro, nc', 'jamestown, nc', 'winston salem, nc'] Score: 0
+2026-05-06 21:16:49,467 INFO: Best item index: 1. Age: 87. Addreses: ['brevard, nc', 'sunset beach, nc', 'ocean isle beach, nc', 'pisgah forest, nc'] Score: 0
+2026-05-06 21:16:49,553 INFO: Best item index: 2. Age: 84. Addreses: ['oak ridge, nc', 'pinnacle, nc', 'kernersville, nc', 'winston salem, nc'] Score: 0
+2026-05-06 21:16:49,642 INFO: Best item index: 3. Age: 81. Addreses: ['montclair, nj', 'caldwell, nj', 'jersey city, nj', 'upper montclair, nj'] Score: 0
+2026-05-06 21:16:49,731 INFO: Best item index: 4. Age: 58. Addreses: ['beaverton, or', 'portland, or', 'tigard, or', 'lafayette, la'] Score: 0
+2026-05-06 21:16:49,806 INFO: Best item index: 5. Age: 87. Addreses: ['georgetown, in', 'morganton, nc', 'rutherford college, nc'] Score: 0
+2026-05-06 21:16:49,894 INFO: Best item index: 6. Age: 58. Addreses: ['randleman, nc', 'frostproof, fl', 'reidsville, nc', 'greensboro, nc'] Score: 0
+2026-05-06 21:16:49,984 INFO: Best item index: 7. Age: 77. Addreses: ['asheville, nc', 'saint augustine, fl', 'hendersonville, nc', 'lenoir, nc'] Score: 0
+2026-05-06 21:16:50,060 INFO: Best item index: 8. Age: 79. Addreses: ['greenville, il', 'salt lake cty, ut', 'pocahontas, il'] Score: 0
+2026-05-06 21:16:50,111 INFO: Best item index: 9. Age: 90. Addreses: ['magna, ut'] Score: 0
+2026-05-06 21:17:03,485 INFO: Robert Kirkman's information scraped
+2026-05-06 21:17:09,740 DEBUG: Started executable: `C:\Leads automation\leads-automation\venv\Lib\site-packages\seleniumbase\drivers\uc_driver.exe` in a child process with pid: 408 using 134217728 to output -1
+2026-05-06 21:17:10,360 DEBUG: Attempting to acquire lock 2502019582800 on downloaded_files/pyautogui.lock
+2026-05-06 21:17:10,361 DEBUG: Lock 2502019582800 acquired on downloaded_files/pyautogui.lock
+2026-05-06 21:17:10,364 DEBUG: Attempting to release lock 2502019582800 on downloaded_files/pyautogui.lock
+2026-05-06 21:17:10,365 DEBUG: Lock 2502019582800 released on downloaded_files/pyautogui.lock
+2026-05-06 21:17:41,949 INFO: Don Roff's information scraped
+2026-05-06 21:17:48,209 DEBUG: Started executable: `C:\Leads automation\leads-automation\venv\Lib\site-packages\seleniumbase\drivers\uc_driver.exe` in a child process with pid: 6760 using 134217728 to output -1
+2026-05-06 21:17:48,843 DEBUG: Attempting to acquire lock 2502019582032 on downloaded_files/pyautogui.lock
+2026-05-06 21:17:48,844 DEBUG: Lock 2502019582032 acquired on downloaded_files/pyautogui.lock
+2026-05-06 21:17:48,847 DEBUG: Attempting to release lock 2502019582032 on downloaded_files/pyautogui.lock
+2026-05-06 21:17:48,848 DEBUG: Lock 2502019582032 released on downloaded_files/pyautogui.lock
+2026-05-06 21:17:56,289 INFO: Tsutomu Nihei's information scraped
+2026-05-06 21:18:05,423 DEBUG: Started executable: `C:\Leads automation\leads-automation\venv\Lib\site-packages\seleniumbase\drivers\uc_driver.exe` in a child process with pid: 7752 using 134217728 to output -1
+2026-05-06 21:18:07,512 DEBUG: Attempting to acquire lock 2502019599488 on downloaded_files/pyautogui.lock
+2026-05-06 21:18:07,514 DEBUG: Lock 2502019599488 acquired on downloaded_files/pyautogui.lock
+2026-05-06 21:18:07,517 DEBUG: Attempting to release lock 2502019599488 on downloaded_files/pyautogui.lock
+2026-05-06 21:18:07,518 DEBUG: Lock 2502019599488 released on downloaded_files/pyautogui.lock
+2026-05-06 21:18:34,855 INFO: David Dvorkin's information scraped
+{'Elana Gomel': None, 'Mark Hertsgaard': {'address': '1121 Broderick St, San Francisco, CA 94115', 'contact_num': '415-874-7145', 'email': None}, 'Martín Lígori': None, 'Ricardo Ferrari': {'address': '185 Senter Rd, San Jose, CA 95111', 'contact_num': '541-683-5032', 'email': None}, 'Jeph Loeb': None, 'Salvador Sanz': {'address': '1614 Covington St, Wichita Falls, TX 76306', 'contact_num': '940-704-3864', 'email': None}, 'Robert Kirkman': {'address': '6010 Thistle Trce, Greensboro, NC 27410', 'contact_num': '336-327-9659', 'email': None}, 'Don Roff': None, 'Tsutomu Nihei': None, 'David Dvorkin': {'address': '2957 S Quay Way, Denver, CO 80227', 'contact_num': '303-985-2327', 'email': None}}
+2026-05-06 21:18:38,387 INFO: Completed Veripages Enrichment
+2026-05-06 21:18:38,388 INFO: Staring: Export to Excel
+2026-05-06 21:18:45,368 INFO: Fetched 10 authors
+2026-05-06 21:18:47,875 INFO: 0 already exists in the company db. Successfully exported 10 authors
+2026-05-06 21:18:48,230 INFO: Completed Export to Excel
+2026-05-06 21:18:48,230 INFO: Pipeline completed successully

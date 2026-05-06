@@ -18,7 +18,10 @@ class GoodreadsSpider(scrapy.Spider):
 
     custom_settings = {
         #"JOBDIR": f"jobs/{name}_{datetime.now().strftime('%Y%m%d_%H%M%S')}",
-        "JOBDIR": f"jobdir/{name}",
+        #"JOBDIR": f"jobdir/{name}",
+        # "SCHEDULER": "scrapy_redis.scheduler.Scheduler",
+        # "DUPEFILTER_CLASS": "scrapy_redis.dupefilter.RFPDupeFilter",
+        # "REDIS_URL": "redis://localhost:6379/0",
         "CLOSESPIDER_ITEMCOUNT": settings.SPIDER_LIMIT,
         "ITEM_PIPELINES": {
             "bookscraper.pipelines.GoodreadsPipeline": 300,

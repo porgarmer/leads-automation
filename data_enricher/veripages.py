@@ -261,7 +261,7 @@ def main():
     try:
         for author in authors:
             author = author.to_dict()
-            print(f"{author}\n")
+           
             author_name = author["author"]
             info = scrape_author_information(driver=driver, author_name=author_name, author=author)
             author_information[author_name] = info
