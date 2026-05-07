@@ -10,6 +10,7 @@ services:
     command: >
       redis-server
       --appendonly yes
+      --appendfsync always
       --save 60 1
       --maxmemory 256mb
       --maxmemory-policy allkeys-lru

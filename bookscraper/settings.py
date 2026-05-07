@@ -22,8 +22,8 @@ ADDONS = {}
 ROBOTSTXT_OBEY = False
 
 # Concurrency and throttling settings
-#CONCURRENT_REQUESTS = 16
-CONCURRENT_REQUESTS_PER_DOMAIN = 1
+CONCURRENT_REQUESTS = 32
+CONCURRENT_REQUESTS_PER_DOMAIN = 16
 DOWNLOAD_DELAY = 2
 RANDOMIZE_DOWNLOAD_DELAY=True
 
@@ -78,7 +78,7 @@ ITEM_PIPELINES = {
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html
-AUTOTHROTTLE_ENABLED = True
+AUTOTHROTTLE_ENABLED = False
 # The initial download delay
 #AUTOTHROTTLE_START_DELAY = 5
 # The maximum download delay to be set in case of high latencies
@@ -104,3 +104,8 @@ REDIS_STATE_AUTO_SAVE_SECONDS = 300
 SCHEDULER = "scrapy_redis.scheduler.Scheduler"
 DUPEFILTER_CLASS = "scrapy_redis.dupefilter.RFPDupeFilter"
 REDIS_URL = "redis://localhost:6379/0"
+SCHEDULER_QUEUE_CLASS = "scrapy_redis.queue.PriorityQueue"
+
+DEPTH_LIMIT = 5
+
+SCHEDULER_PERSIST = True

@@ -28,6 +28,10 @@ class GoodreadsSpider(scrapy.Spider):
             "bookscraper.pipelines.SaveToDBPipeline": 300
         }
     }
+
+    def __init__(self):
+        super().__init__()
+        self.seen_authors = set()
         
     @classmethod
     def from_crawler(cls, crawler, *args, **kwargs):
@@ -119,7 +123,7 @@ class GoodreadsSpider(scrapy.Spider):
             
         next_page = response.css("a.next_page::attr(href)").get()
         if next_page:
-            yield response.follow(next_page, callback=self.parse)
+            yield response.follow(next_page, callback=self.parse, priority=-100)
             
     def parse_list(self, response):
         book_links = response.css("a.bookTitle")
@@ -129,6 +133,7 @@ class GoodreadsSpider(scrapy.Spider):
             yield response.follow(
                 href, 
                 callback=self.parse_book_page,
+                priority=100,
                 meta={
                     "book_url": href
                 }
@@ -136,7 +141,7 @@ class GoodreadsSpider(scrapy.Spider):
         
         next_page = response.css("a.next_page::attr(href)").get()
         if next_page:
-            yield response.follow(next_page, callback=self.parse_list)
+            yield response.follow(next_page, callback=self.parse_list, priority=-100)
         
     def parse_book_page(self, response):
         book_title = response.css('h1[data-testid="bookTitle"]::text').get()
@@ -146,15 +151,23 @@ class GoodreadsSpider(scrapy.Spider):
         
         author_link = response.css("a.ContributorLink::attr(href)").get()
         
+        if author_link in self.seen_authors:
+            return
+
+        self.seen_authors.add(author_link)
+
         yield response.follow(
             author_link, 
             callback=self.parse_author_page,
+            priority=1000,
             meta={
                 "book_title": book_title,
                 "book_rating": book_rating,
                 "book_url": book_url,
-                "author_name": author_name
-            }
+                "author_name": author_name,
+                "depth": 0
+            },
+            
         )
         
     def parse_author_page(self, response):

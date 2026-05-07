@@ -244,7 +244,6 @@ def add_lead(session, author, author_info):
 
 def update_author_db_record(session, author):
     #After the author is now a lead, set it to be deleted later in the scraped_author table
-    author = session.query(ScrapedAuthor).filter_by(id=author["id"]).first()
     if author:
         author.to_delete = True
 
@@ -260,12 +259,11 @@ def main():
     driver = create_driver()
     try:
         for author in authors:
-            author = author.to_dict()
-           
-            author_name = author["author"]
-            info = scrape_author_information(driver=driver, author_name=author_name, author=author)
+            author_dict = author.to_dict()
+            author_name = author_dict["author"]
+            info = scrape_author_information(driver=driver, author_name=author_name, author=author_dict)
             author_information[author_name] = info
-            add_lead(session=session, author=author, author_info=info)
+            add_lead(session=session, author=author_dict, author_info=info)
             update_author_db_record(session=session, author=author)
             
             logging.info(f"{author_name}'s information scraped")
