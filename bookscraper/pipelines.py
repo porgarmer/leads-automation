@@ -111,7 +111,8 @@ class GoodreadsPipeline:
         return about_author
     
     def convert_rating_to_int(self, rating):
-        return float(rating)
+        rating_number = rating.strip().split(" ")[0]
+        return float(rating_number)
     
     def check_date_format(self, date_str, format):
         try:

@@ -55,7 +55,7 @@ SCRAPEOPS_PROXY_ENABLED = True
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 DOWNLOADER_MIDDLEWARES = {
     "bookscraper.middlewares.BookscraperDownloaderMiddleware": 543,
-    "bookscraper.middlewares.BlockLinkExtractionMiddleware": 543,  # After default
+    #"bookscraper.middlewares.BlockLinkExtractionMiddleware": 543,  # After default
     "bookscraper.middlewares.ScrapeOpsFakeBrowserHeaderAgentMiddleware": 400,
     #"bookscraper.middlewares.FakeUserAgentMiddleware": 400,
     # 'scrapeops_scrapy_proxy_sdk.scrapeops_scrapy_proxy_sdk.ScrapeOpsScrapyProxySdk': 725,
@@ -110,3 +110,4 @@ SCHEDULER_QUEUE_CLASS = "scrapy_redis.queue.PriorityQueue"
 DEPTH_LIMIT = 5
 
 SCHEDULER_PERSIST = True
+

@@ -141,22 +141,37 @@ class GoodreadsSpider(scrapy.Spider):
             )
             
     def parse_list(self, response):
-        book_links = response.css("a.bookTitle")
+        book_rows = response.css('tr[itemscope][itemtype="http://schema.org/Book"]')
         
-        for book_link in book_links:
-            href = book_link.attrib["href"]
-            if href in self.seen_book_urls:
+        for book_row in book_rows:
+            book_title = book_row.css('a.bookTitle span[itemprop="name"]::text').get()
+            book_url = "https://www.goodreads.com" + book_row.css("a.bookTitle::attr(href)").get()
+            book_rating =  book_row.css('span.minirating::text').get()
+            author_name = book_row.css('a.authorName span[itemprop="name"]::text').get()
+            author_link = book_row.css('a.authorName::attr(href)').get()
+            
+            if not author_link:
+                continue  # or self.logger.debug(...)
+
+            if author_link in self.seen_authors:  # ⚠️ Also add dedup back!
                 continue
-            self.seen_book_urls.add(href)
+            self.seen_authors.add(author_link)
+            
+            if book_url in self.seen_book_urls:
+                continue
+            self.seen_book_urls.add(book_url)
+            
             yield response.follow(
-                href, 
-                callback=self.parse_book_page,
-                priority=30,
+                author_link, 
+                callback=self.parse_author_page,
+                priority=100,
                 meta={
-                    "book_url": href,
-                    "dont_follow": True,  # Critical: prevent link extraction from book pages
-                    "depth": response.meta.get('depth', 1) + 1
-                }
+                    "book_title": book_title,
+                    "book_rating": book_rating,
+                    "book_url": book_url,
+                    "author_name": author_name,
+                    "depth": 0,
+                },
             )
         
         next_page = response.css("a.next_page::attr(href)").get()
@@ -168,38 +183,36 @@ class GoodreadsSpider(scrapy.Spider):
                 meta={'depth': response.meta.get('depth', 1) + 1}
             )
         
-    def parse_book_page(self, response):
-        book_title = response.css('h1[data-testid="bookTitle"]::text').get()
-        book_rating = response.css("div.RatingStatistics__rating::text").get()
-        book_url = "https://www.goodreads.com" + response.meta["book_url"]
-        author_name = response.css("span.ContributorLink__name::text").get()
+    # def parse_book_page(self, response):
+    #     book_title = response.css('h1[data-testid="bookTitle"]::text').get()
+    #     book_rating = response.css("div.RatingStatistics__rating::text").get()
+    #     book_url = "https://www.goodreads.com" + response.meta["book_url"]
+    #     author_name = response.css("span.ContributorLink__name::text").get()
         
-        author_link = response.css("a.ContributorLink::attr(href)").get()
+    #     author_link = response.css("a.ContributorLink::attr(href)").get()
         
-        if not author_link:
-            self.logger.debug(f"No author link found: {response.url}")
-            return
+    #     if not author_link:
+    #         self.logger.debug(f"No author link found: {response.url}")
+    #         return
 
-        if author_link in self.seen_authors:
-            return
+    #     if author_link in self.seen_authors:
+    #         return
 
-        self.seen_authors.add(author_link)
+    #     self.seen_authors.add(author_link)
 
-        yield response.follow(
-            author_link, 
-            callback=self.parse_author_page,
-            priority=100,
-            meta={
-                "book_title": book_title,
-                "book_rating": book_rating,
-                "book_url": book_url,
-                "author_name": author_name,
-                "depth": 0,
-                "depth_stats": False,  # Skip depth middleware tracking
-                "dont_follow": True,    # Prevent crawling author page links
-            },
-            errback=self.handle_error
-        )
+    #     yield response.follow(
+    #         author_link, 
+    #         callback=self.parse_author_page,
+    #         priority=100,
+    #         meta={
+    #             "book_title": book_title,
+    #             "book_rating": book_rating,
+    #             "book_url": book_url,
+    #             "author_name": author_name,
+    #             "depth": 0,
+    #         },
+    #         errback=self.handle_error
+    #     )
         
     def parse_author_page(self, response):
         retry_count = response.meta.get("retry_count", 0)
