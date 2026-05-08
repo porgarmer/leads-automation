@@ -26,12 +26,17 @@ class GoodreadsSpider(scrapy.Spider):
         "ITEM_PIPELINES": {
             "bookscraper.pipelines.GoodreadsPipeline": 300,
             "bookscraper.pipelines.SaveToDBPipeline": 300
-        }
+        },
+         "LINK_EXTRACTORS_ALLOW_DENY": {
+            "allow": [r'/author/', r'/list/show/'],
+            "deny": [r'/book/show/', r'/work/editions/'],
+        },
     }
 
     def __init__(self):
         super().__init__()
         self.seen_authors = set()
+        self.seen_book_urls = set()
         
     @classmethod
     def from_crawler(cls, crawler, *args, **kwargs):
@@ -105,7 +110,7 @@ class GoodreadsSpider(scrapy.Spider):
         try:
             self.db_session.execute(
                 text("SELECT RELEASE_LOCK(:name)"),
-                {"name": "author_spider"}
+                {"name": self.name}
             )
             self.db_session.commit()
             self.logger.info("MySQL lock released")
@@ -119,29 +124,49 @@ class GoodreadsSpider(scrapy.Spider):
         
         for link in list_links:
             href = link.attrib["href"]
-            yield response.follow(href, callback=self.parse_list)
+            yield response.follow(
+                href, 
+                callback=self.parse_list,
+                meta={"depth": 1},
+                priority=50,
+            )
             
         next_page = response.css("a.next_page::attr(href)").get()
         if next_page:
-            yield response.follow(next_page, callback=self.parse, priority=-100)
+            yield response.follow(
+                next_page, 
+                callback=self.parse, 
+                priority=10,
+                meta={"depth": 1},
+            )
             
     def parse_list(self, response):
         book_links = response.css("a.bookTitle")
         
         for book_link in book_links:
             href = book_link.attrib["href"]
+            if href in self.seen_book_urls:
+                continue
+            self.seen_book_urls.add(href)
             yield response.follow(
                 href, 
                 callback=self.parse_book_page,
-                priority=100,
+                priority=30,
                 meta={
-                    "book_url": href
+                    "book_url": href,
+                    "dont_follow": True,  # Critical: prevent link extraction from book pages
+                    "depth": response.meta.get('depth', 1) + 1
                 }
             )
         
         next_page = response.css("a.next_page::attr(href)").get()
         if next_page:
-            yield response.follow(next_page, callback=self.parse_list, priority=-100)
+            yield response.follow(
+                next_page, 
+                callback=self.parse_list, 
+                priority=-10,
+                meta={'depth': response.meta.get('depth', 1) + 1}
+            )
         
     def parse_book_page(self, response):
         book_title = response.css('h1[data-testid="bookTitle"]::text').get()
@@ -151,6 +176,10 @@ class GoodreadsSpider(scrapy.Spider):
         
         author_link = response.css("a.ContributorLink::attr(href)").get()
         
+        if not author_link:
+            self.logger.debug(f"No author link found: {response.url}")
+            return
+
         if author_link in self.seen_authors:
             return
 
@@ -159,15 +188,17 @@ class GoodreadsSpider(scrapy.Spider):
         yield response.follow(
             author_link, 
             callback=self.parse_author_page,
-            priority=1000,
+            priority=100,
             meta={
                 "book_title": book_title,
                 "book_rating": book_rating,
                 "book_url": book_url,
                 "author_name": author_name,
-                "depth": 0
+                "depth": 0,
+                "depth_stats": False,  # Skip depth middleware tracking
+                "dont_follow": True,    # Prevent crawling author page links
             },
-            
+            errback=self.handle_error
         )
         
     def parse_author_page(self, response):
@@ -224,3 +255,7 @@ class GoodreadsSpider(scrapy.Spider):
         scraped_author["about_author"] = about_author
         
         yield scraped_author
+
+    def handle_error(self, failure):
+        self.logger.error(f"Request failed: {failure.request.url} - {failure.value}")
+       

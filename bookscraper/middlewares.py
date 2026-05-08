@@ -146,3 +146,20 @@ class FakeUserAgentMiddleware:
         
     def process_request(self, request, spider):
         request.headers.setdefault("User-Agent", self.ua.random)
+
+from scrapy.http import HtmlResponse
+
+class BlockLinkExtractionMiddleware:
+    """Prevent Scrapy from auto-extracting links on specific pages"""
+    
+    def process_response(self, request, response, spider):
+        # If this request has dont_follow=True, strip link extraction
+        if request.meta.get('dont_follow') and isinstance(response, HtmlResponse):
+            # Override the response's extract_links to return empty
+            original_extract_links = response.extract_links
+            
+            def no_links(*args, **kwargs):
+                return []
+            response.extract_links = no_links
+            
+        return response

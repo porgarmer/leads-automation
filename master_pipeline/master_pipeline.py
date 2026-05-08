@@ -29,10 +29,10 @@ if __name__ == "__main__":
     #     "scrapy crawl goodreads"
     # )
     
-    # run_step(
-    #     "Fill Age + Current Address",
-    #     "python -m data_enricher.fill_author_age_and_curr_address"
-    # )
+    run_step(
+        "Fill Age + Current Address",
+        "python -m data_enricher.fill_author_age_and_curr_address"
+    )
     
     run_step(
         "Veripages Enrichment",

@@ -55,6 +55,7 @@ SCRAPEOPS_PROXY_ENABLED = True
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 DOWNLOADER_MIDDLEWARES = {
     "bookscraper.middlewares.BookscraperDownloaderMiddleware": 543,
+    "bookscraper.middlewares.BlockLinkExtractionMiddleware": 543,  # After default
     "bookscraper.middlewares.ScrapeOpsFakeBrowserHeaderAgentMiddleware": 400,
     #"bookscraper.middlewares.FakeUserAgentMiddleware": 400,
     # 'scrapeops_scrapy_proxy_sdk.scrapeops_scrapy_proxy_sdk.ScrapeOpsScrapyProxySdk': 725,
@@ -80,9 +81,9 @@ ITEM_PIPELINES = {
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html
 AUTOTHROTTLE_ENABLED = False
 # The initial download delay
-#AUTOTHROTTLE_START_DELAY = 5
+AUTOTHROTTLE_START_DELAY = 1
 # The maximum download delay to be set in case of high latencies
-#AUTOTHROTTLE_MAX_DELAY = 60
+AUTOTHROTTLE_MAX_DELAY = 10
 # The average number of requests Scrapy should be sending in parallel to
 # each remote server
 #AUTOTHROTTLE_TARGET_CONCURRENCY = 1.0
