@@ -164,7 +164,7 @@ class GoodreadsSpider(scrapy.Spider):
             yield response.follow(
                 author_link, 
                 callback=self.parse_author_page,
-                priority=100,
+                priority=30,
                 meta={
                     "book_title": book_title,
                     "book_rating": book_rating,
@@ -179,7 +179,7 @@ class GoodreadsSpider(scrapy.Spider):
             yield response.follow(
                 next_page, 
                 callback=self.parse_list, 
-                priority=-10,
+                priority=40,
                 meta={'depth': response.meta.get('depth', 1) + 1}
             )
         

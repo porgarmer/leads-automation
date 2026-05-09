@@ -107,7 +107,7 @@ DUPEFILTER_CLASS = "scrapy_redis.dupefilter.RFPDupeFilter"
 REDIS_URL = "redis://localhost:6379/0"
 SCHEDULER_QUEUE_CLASS = "scrapy_redis.queue.PriorityQueue"
 
-DEPTH_LIMIT = 5
+DEPTH_LIMIT = 0
 
 SCHEDULER_PERSIST = True
 

@@ -12,6 +12,6 @@ class Settings:
     SPIDER_LIMIT = int(os.getenv("SPIDER_LIMIT", 1000))
     OVERALL_LIMIT = int(os.getenv("OVERALL_LIMIT", 200))
     
-    
+    DB_URL = os.getenv("DB_URL", "mysql+mysqlconnector://root:12345@localhost:3306/leads")
     
 settings = Settings()
