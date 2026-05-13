@@ -182,7 +182,32 @@ class GoodreadsSpider(scrapy.Spider):
                 priority=40,
                 meta={'depth': response.meta.get('depth', 1) + 1}
             )
+    def parse_book_page(self, response):
+        """
+        Stub handler for OLD redis-queued requests that reference this callback.
+        NEW requests should never hit this - they go directly to parse_author_page.
+        """
+        self.logger.warning(f"⚠️ Processing DEPRECATED parse_book_page request: {response.url}")
         
+        # Optional: Try to salvage the request by extracting author link and re-routing
+        author_link = response.css("a.ContributorLink::attr(href)").get()
+        if author_link:
+            self.logger.info(f"→ Re-routing to parse_author_page: {author_link}")
+            yield response.follow(
+                author_link,
+                callback=self.parse_author_page,
+                meta={
+                    **response.meta,
+                    "depth": 0,  # Reset depth for author page
+                },
+                dont_filter=True,  # Allow re-processing
+            )
+            return
+        
+        # If no author link, just drop the request
+        self.logger.debug(f"✗ Dropping deprecated request (no author link): {response.url}")
+        return
+    
     # def parse_book_page(self, response):
     #     book_title = response.css('h1[data-testid="bookTitle"]::text').get()
     #     book_rating = response.css("div.RatingStatistics__rating::text").get()

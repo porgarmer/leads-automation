@@ -257,6 +257,7 @@ def main():
     )
     author_information = {}
     driver = create_driver()
+    number_of_authors = 0
     try:
         for author in authors:
             author_dict = author.to_dict()
@@ -266,9 +267,12 @@ def main():
             add_lead(session=session, author=author_dict, author_info=info)
             update_author_db_record(session=session, author=author)
             
-            logging.info(f"{author_name}'s information scraped")
+            session.commit()
             
-        session.commit()
+            logging.info(f"{author_name}'s information scraped")
+            number_of_authors+=1
+            logging.info(f"Number of authors: {number_of_authors}")
+
         driver.quit()
     except Exception as e:
         traceback.print_exc(e)
