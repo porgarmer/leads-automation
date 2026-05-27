@@ -188,8 +188,9 @@ def scrape_author_information(driver, author_name, author):
         
         #Check if the "No public records found" message exists
         no_records = driver.find_elements(By.CLASS_NAME, "no-records-label")
+        no_records2 = driver.find_elements(By.CLASS_NAME, "no-records-found")
 
-        if no_records:
+        if no_records or no_records2:
             return None
 
         #Look for best possible match
